@@ -1,6 +1,6 @@
-package org.teamvoided.template
+package org.teamvoided.vanillium
 
-import org.teamvoided.template.Template.log
+import org.teamvoided.vanillium.Vanillium.log
 
 @Suppress("unused")
 object TemplateClient{
