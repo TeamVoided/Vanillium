@@ -3,7 +3,9 @@
   "minVersion": "0.8",
   "package": "org.teamvoided.vanillium.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [],
+  "mixins": [
+    "ItemStackMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }
