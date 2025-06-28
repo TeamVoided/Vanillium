@@ -34,8 +34,8 @@ modSettings {
     entrypoint("client", "org.teamvoided.vanillium.VanilliumClient::init")
     entrypoint("fabric-datagen", "org.teamvoided.vanillium.data.gen.VanilliumData")
 
-    mixinFile("${modId()}.client.mixins.json")
-//    mixinFile("${modId()}.mixins.json")
+//    mixinFile("${modId()}.client.mixins.json")
+    mixinFile("${modId()}.mixins.json")
 //    accessWidener("${modId()}.accesswidener")
 }
 

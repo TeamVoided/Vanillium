@@ -30,7 +30,7 @@ object Vanillium {
         }
 
         PostUseItemEvents.EVENT.register { original, world, player, hand ->
-            if (original.result != ActionResult.PASS) {
+            if (original.result != ActionResult.PASS && !player.isCreative) {
                 val stack = original.value
                 if (!stack.isEmpty) {
                     val cooldown = config.customCooldowns[stack.item]

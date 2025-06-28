@@ -49,7 +49,7 @@ class VanilliumCfg : Config(id(MODID)) {
 
     @ConfigGroup.Pop
     var customCooldowns = mutableMapOf(
-        SPLASH_POTION to 40,
-        LINGERING_POTION to 40,
+        SPLASH_POTION to 30,
+        LINGERING_POTION to 60,
     )
 }
