@@ -19,31 +19,31 @@ import org.teamvoided.vanillium.events.PostUseItemEvents;
 public class ItemStackMixin {
 
     @ModifyReturnValue(method = "use", at = @At("RETURN"))
-    private TypedActionResult<ItemStack> run(TypedActionResult<ItemStack> original, World world, PlayerEntity player, Hand hand) {
+    private TypedActionResult<ItemStack> postUseHook(TypedActionResult<ItemStack> original, World world, PlayerEntity player, Hand hand) {
         PostUseItemEvents.POST_USE.invoker().interact(original, world, player, hand);
         return original;
     }
 
     @ModifyReturnValue(method = "useOnBlock", at = @At("RETURN"))
-    private ActionResult run(ActionResult original, ItemUsageContext context) {
+    private ActionResult postUseOnBlockHook(ActionResult original, ItemUsageContext context) {
         PostUseItemEvents.POST_USE_ON_BLOCK.invoker().interact(original, context);
         return original;
     }
 
     @ModifyReturnValue(method = "useOnEntity", at = @At("RETURN"))
-    private ActionResult run(ActionResult original, PlayerEntity user, LivingEntity entity, Hand hand) {
+    private ActionResult postUseOnEntityHook(ActionResult original, PlayerEntity user, LivingEntity entity, Hand hand) {
         PostUseItemEvents.POST_USE_ON_ENTITY.invoker().interact(original, user, entity, hand);
         return original;
     }
 
     @ModifyReturnValue(method = "finishUsing", at = @At("RETURN"))
-    private ItemStack run(ItemStack original, World world, LivingEntity user) {
+    private ItemStack postFinishUsingHook(ItemStack original, World world, LivingEntity user) {
         PostUseItemEvents.POST_USING.invoker().interact(original, (ItemStack) (Object) this, world, user);
         return original;
     }
 
     @Inject(method = "onStoppedUsing", at = @At("TAIL"))
-    private void run(World world, LivingEntity user, int remainingUseTicks, CallbackInfo ci) {
+    private void postOnStoppedUsingHook(World world, LivingEntity user, int remainingUseTicks, CallbackInfo ci) {
         PostUseItemEvents.POST_STOP_USING.invoker().interact((ItemStack) (Object) this, world, user, remainingUseTicks);
     }
 }
