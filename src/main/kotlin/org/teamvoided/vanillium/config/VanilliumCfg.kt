@@ -10,7 +10,7 @@ import org.teamvoided.vanillium.Vanillium.id
 
 @Suppress("unused")
 class VanilliumCfg : Config(id(MODID)) {
-    var groupName = ConfigGroup("group_id", false)
+    var items = ConfigGroup("items", false)
 
     @RequiresAction(Action.RESTART)
     var customStackSizes = mutableMapOf(
@@ -46,6 +46,8 @@ class VanilliumCfg : Config(id(MODID)) {
         MUSIC_DISC_PIGSTEP to 16,
         MUSIC_DISC_PRECIPICE to 16,
     )
+
+    var enableCooldownsInCreative = true
 
     @ConfigGroup.Pop
     var customCooldowns = mutableMapOf(
