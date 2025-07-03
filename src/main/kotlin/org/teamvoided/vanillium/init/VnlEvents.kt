@@ -4,12 +4,18 @@ import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.DataComponentTypes.MAX_STACK_SIZE
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.inventory.StackReference
 import net.minecraft.item.ItemStack
 import net.minecraft.item.ThrowablePotionItem
+import net.minecraft.screen.slot.Slot
 import net.minecraft.util.ActionResult
+import net.minecraft.util.ClickType
 import net.minecraft.util.UseAction
 import org.teamvoided.vanillium.Vanillium.config
+import org.teamvoided.vanillium.events.InventoryItemEvents
 import org.teamvoided.vanillium.events.PostUseItemEvents
+import org.teamvoided.vanillium.inv.shulkerOnItem
+import org.teamvoided.vanillium.inv.itemOnShulker
 
 object VnlEvents {
     fun init() {
@@ -18,10 +24,33 @@ object VnlEvents {
                 ctx.modify(item) { it.put(MAX_STACK_SIZE, count) }
             }
         }
-        postUse()
+        cooldownEvents()
+        InventoryItemEvents.ON_CLICKED_ON_OTHER.register(::onClickedOnOther)
+        InventoryItemEvents.ON_CLICKED.register(::onClicked)
     }
 
-    fun postUse() {
+    fun onClickedOnOther(stack: ItemStack, otherSlot: Slot, clickType: ClickType, player: PlayerEntity): Boolean? {
+        if (config.shulkerInventoryInsert) {
+            val value = shulkerOnItem(stack, otherSlot, clickType, player)
+            if (value != null) return value
+        }
+
+        return null
+    }
+
+    fun onClicked(
+        stack: ItemStack, otherStack: ItemStack, thisSlot: Slot,
+        clickType: ClickType, player: PlayerEntity, reference: StackReference,
+    ): Boolean? {
+        if (config.shulkerInventoryInsert) {
+            val value = itemOnShulker(stack, otherStack, thisSlot, clickType, player, reference)
+            if (value != null) return value
+        }
+
+        return null
+    }
+
+    fun cooldownEvents() {
         PostUseItemEvents.POST_USE.register { result, world, player, hand ->
             if (!result.result.noAction() && shouldCauseCooldown(player)) {
                 val stack = result.value

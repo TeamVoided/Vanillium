@@ -49,9 +49,11 @@ class VanilliumCfg : Config(id(MODID)) {
 
     var enableCooldownsInCreative = true
 
-    @ConfigGroup.Pop
     var customCooldowns = mutableMapOf(
         SPLASH_POTION to 30,
         LINGERING_POTION to 60,
     )
+
+    @ConfigGroup.Pop
+    var shulkerInventoryInsert = true
 }
