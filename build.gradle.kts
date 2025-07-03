@@ -31,7 +31,7 @@ repositories {
 
 modSettings {
     entrypoint("main", "org.teamvoided.vanillium.Vanillium::init")
-    entrypoint("client", "org.teamvoided.vanillium.VanilliumClient::init")
+//    entrypoint("client", "org.teamvoided.vanillium.VanilliumClient::init")
     entrypoint("fabric-datagen", "org.teamvoided.vanillium.data.gen.VanilliumData")
 
 //    mixinFile("${modId()}.client.mixins.json")
@@ -59,12 +59,13 @@ loom {
     runs {
         named("client") {
             programArgs("--username", username)
+            ideConfigGenerated(false)
             uuid?.let { programArgs("--uuid", uuid) }
         }
 
         create("TestWorld") {
             client()
-            ideConfigGenerated(true)
+            ideConfigGenerated(false)
             runDir("run")
             programArgs("--quickPlaySingleplayer", "test", "--username", username)
             uuid?.let { programArgs("--uuid", uuid) }
@@ -72,7 +73,7 @@ loom {
 
         create("DataGen") {
             client()
-            ideConfigGenerated(true)
+            ideConfigGenerated(false)
             vmArg("-Dfabric-api.datagen")
             vmArg("-Dfabric-api.datagen.output-dir=${file("src/main/generated")}")
             vmArg("-Dfabric-api.datagen.modid=${modSettings.modId()}")

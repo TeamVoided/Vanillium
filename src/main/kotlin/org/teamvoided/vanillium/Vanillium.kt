@@ -18,7 +18,7 @@ object Vanillium {
     var config = ConfigApi.registerAndLoadConfig(::VanilliumCfg)
 
     fun init() {
-        log.info("Hello from Vanilla")
+        log.info("Vanillaing Vanilla")
         VnlEvents.init()
     }
 
