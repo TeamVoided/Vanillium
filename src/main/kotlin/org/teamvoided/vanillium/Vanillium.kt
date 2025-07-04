@@ -6,6 +6,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.teamvoided.vanillium.config.VanilliumCfg
 import org.teamvoided.vanillium.init.VnlEvents
+import org.teamvoided.vanillium.init.VnlMenus
 
 @Suppress("unused")
 object Vanillium {
@@ -19,8 +20,10 @@ object Vanillium {
 
     fun init() {
         log.info("Vanillaing Vanilla")
+        VnlMenus.init()
         VnlEvents.init()
     }
 
     fun id(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(MODID, path)
+    fun mc(path: String): ResourceLocation = ResourceLocation.withDefaultNamespace(path)
 }

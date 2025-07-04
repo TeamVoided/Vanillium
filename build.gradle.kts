@@ -31,10 +31,10 @@ repositories {
 
 modSettings {
     entrypoint("main", "org.teamvoided.vanillium.Vanillium::init")
-//    entrypoint("client", "org.teamvoided.vanillium.VanilliumClient::init")
+    entrypoint("client", "org.teamvoided.vanillium.client.VanilliumClient::init")
     entrypoint("fabric-datagen", "org.teamvoided.vanillium.data.gen.VanilliumData")
 
-//    mixinFile("${modId()}.client.mixins.json")
+    mixinFile("${modId()}.client.mixins.json")
     mixinFile("${modId()}.mixins.json")
 //    accessWidener("${modId()}.accesswidener")
 }

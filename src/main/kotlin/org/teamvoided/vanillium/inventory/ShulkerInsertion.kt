@@ -1,6 +1,7 @@
-package org.teamvoided.vanillium.inv
+package org.teamvoided.vanillium.inventory
 
 import net.minecraft.core.component.DataComponents.CONTAINER
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundEvents.SHULKER_BOX_OPEN
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.SlotAccess
@@ -12,6 +13,8 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.component.ItemContainerContents
 import net.minecraft.world.level.block.ShulkerBoxBlock
 import net.minecraft.world.level.block.entity.ShulkerBoxBlockEntity.CONTAINER_SIZE
+import org.apache.logging.log4j.core.jmx.Server
+import org.teamvoided.vanillium.inventory.QuickShulkerBoxMenu.Companion.openShulker
 import kotlin.math.min
 
 fun playInsertSound(entity: Entity) =
@@ -23,14 +26,25 @@ fun itemOnShulker(
     clickAction: ClickAction, player: Player, access: SlotAccess,
 ): Boolean? {
     if (clickAction != ClickAction.SECONDARY) return null
+    if (!thisSlot.allowModification(player)) return null
 
     val inputStack = access.get()
-    if (inputStack.isEmpty || !inputStack.item.canFitInsideContainerItems()) return null
+    if (!inputStack.item.canFitInsideContainerItems()) return null
 
     val item = stack.item
     if (item !is BlockItem || item.block !is ShulkerBoxBlock) return null
 
     val contentsData = stack.get(CONTAINER) ?: return null
+
+    if (inputStack.isEmpty) {
+        if (player is ServerPlayer){
+            player.closeContainer()
+        }
+        player.openMenu(openShulker(stack, thisSlot.containerSlot))
+        playInsertSound(player)
+        return true
+    }
+
     val originInventory = contentsData.stream().toList()
     val inventory = tryToAdd(originInventory.toMutableList(), access, player)
     if (inventory != originInventory) {
@@ -72,6 +86,7 @@ fun tryToAdd(inventory: MutableList<ItemStack>, access: SlotAccess, player: Play
 
 fun shulkerOnItem(stack: ItemStack, otherSlot: Slot, clickAction: ClickAction, player: Player): Boolean? {
     if (clickAction != ClickAction.SECONDARY) return null
+    if (!otherSlot.allowModification(player)) return null
 
     if (otherSlot.item.isEmpty || !otherSlot.item.item.canFitInsideContainerItems()) return null
 

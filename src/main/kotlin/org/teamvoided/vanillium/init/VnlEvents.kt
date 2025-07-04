@@ -1,21 +1,27 @@
 package org.teamvoided.vanillium.init
 
+import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
 import net.minecraft.core.component.DataComponents.CHARGED_PROJECTILES
 import net.minecraft.core.component.DataComponents.MAX_STACK_SIZE
 import net.minecraft.world.InteractionResult
+import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.SlotAccess
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ClickAction
 import net.minecraft.world.inventory.Slot
+import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ThrowablePotionItem
 import net.minecraft.world.item.UseAnim
+import net.minecraft.world.level.block.ShulkerBoxBlock
 import org.teamvoided.vanillium.Vanillium.config
 import org.teamvoided.vanillium.events.InventoryItemEvents
 import org.teamvoided.vanillium.events.PostUseItemEvents
-import org.teamvoided.vanillium.inv.itemOnShulker
-import org.teamvoided.vanillium.inv.shulkerOnItem
+import org.teamvoided.vanillium.inventory.QuickShulkerBoxMenu.Companion.openShulker
+import org.teamvoided.vanillium.inventory.itemOnShulker
+import org.teamvoided.vanillium.inventory.playInsertSound
+import org.teamvoided.vanillium.inventory.shulkerOnItem
 
 object VnlEvents {
     fun init() {
@@ -24,6 +30,21 @@ object VnlEvents {
                 ctx.modify(item) { it.set(MAX_STACK_SIZE, count) }
             }
         }
+        UseItemCallback.EVENT.register { player, world, hand ->
+
+            if (!player.isSpectator) {
+                val stack = player.getItemInHand(hand)
+                val item = stack.item
+                if (item is BlockItem && item.block is ShulkerBoxBlock) {
+                    player.openMenu(openShulker(stack, player.inventory.selected))
+                    playInsertSound(player)
+                    InteractionResultHolder.success(stack)
+                }
+            }
+            InteractionResultHolder.pass(ItemStack.EMPTY)
+        }
+
+
         cooldownEvents()
         InventoryItemEvents.ON_CLICKED_ON_OTHER.register(::onClickedOnOther)
         InventoryItemEvents.ON_CLICKED.register(::onClicked)
