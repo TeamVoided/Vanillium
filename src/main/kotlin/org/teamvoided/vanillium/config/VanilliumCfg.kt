@@ -4,7 +4,7 @@ import me.fzzyhmstrs.fzzy_config.annotations.Action
 import me.fzzyhmstrs.fzzy_config.annotations.RequiresAction
 import me.fzzyhmstrs.fzzy_config.config.Config
 import me.fzzyhmstrs.fzzy_config.config.ConfigGroup
-import net.minecraft.item.Items.*
+import net.minecraft.world.item.Items.*
 import org.teamvoided.vanillium.Vanillium.MODID
 import org.teamvoided.vanillium.Vanillium.id
 
@@ -47,12 +47,11 @@ class VanilliumCfg : Config(id(MODID)) {
         MUSIC_DISC_PRECIPICE to 16,
     )
 
-    var enableCooldownsInCreative = true
-
     var customCooldowns = mutableMapOf(
         SPLASH_POTION to 30,
         LINGERING_POTION to 60,
     )
+    var enableCooldownsInCreative = true
 
     @ConfigGroup.Pop
     var shulkerInventoryInsert = true

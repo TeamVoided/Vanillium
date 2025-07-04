@@ -2,7 +2,7 @@ package org.teamvoided.vanillium.data.gen
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
-import net.minecraft.registry.RegistrySetBuilder
+import net.minecraft.core.RegistrySetBuilder
 import org.teamvoided.vanillium.Vanillium.log
 
 @Suppress("unused")

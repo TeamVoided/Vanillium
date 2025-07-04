@@ -2,14 +2,14 @@ package org.teamvoided.vanillium.events
 
 import net.fabricmc.fabric.api.event.Event
 import net.fabricmc.fabric.api.event.EventFactory.createArrayBacked
-import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.item.ItemStack
-import net.minecraft.item.ItemUsageContext
-import net.minecraft.util.ActionResult
-import net.minecraft.util.Hand
-import net.minecraft.util.TypedActionResult
-import net.minecraft.world.World
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResult
+import net.minecraft.world.InteractionResultHolder
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.context.UseOnContext
+import net.minecraft.world.level.Level
 
 object PostUseItemEvents {
     @JvmField
@@ -36,14 +36,14 @@ object PostUseItemEvents {
         }
 
     @JvmField
-    val POST_USING: Event<PostUsingItemCallback> = createArrayBacked(PostUsingItemCallback::class.java) { listeners ->
+    val POST_FINISH_USING: Event<PostUsingItemCallback> = createArrayBacked(PostUsingItemCallback::class.java) { listeners ->
         PostUsingItemCallback { returned, usedSTack, world, player ->
             listeners.forEach { it.interact(returned, usedSTack, world, player) }
         }
     }
 
     @JvmField
-    val POST_STOP_USING: Event<PostStopUsingItemCallback> =
+    val POST_RELEASE_USING: Event<PostStopUsingItemCallback> =
         createArrayBacked(PostStopUsingItemCallback::class.java) { listeners ->
             PostStopUsingItemCallback { stack, world, user, remainingUseTicks ->
                 listeners.forEach { it.interact(stack, world, user, remainingUseTicks) }
@@ -51,23 +51,23 @@ object PostUseItemEvents {
         }
 
     fun interface PostUseItemCallback {
-        fun interact(returned: TypedActionResult<ItemStack>, world: World, player: PlayerEntity, hand: Hand)
+        fun interact(returned: InteractionResultHolder<ItemStack>, world: Level, player: Player, hand: InteractionHand)
     }
 
     fun interface PostUseOnBlockItemCallback {
-        fun interact(returned: ActionResult, context: ItemUsageContext)
+        fun interact(returned: InteractionResult, context: UseOnContext)
     }
 
     fun interface PostUseOnEntityItemCallback {
-        fun interact(returned: ActionResult, world: PlayerEntity, player: LivingEntity, hand: Hand)
+        fun interact(returned: InteractionResult, world: Player, player: LivingEntity, hand: InteractionHand)
     }
 
     fun interface PostUsingItemCallback {
-        fun interact(returned: ItemStack, usedStack: ItemStack, world: World, player: LivingEntity)
+        fun interact(returned: ItemStack, usedStack: ItemStack, world: Level, player: LivingEntity)
     }
 
     fun interface PostStopUsingItemCallback {
-        fun interact(usedStack: ItemStack, world: World, player: LivingEntity, remainingUseTicks: Int)
+        fun interact(usedStack: ItemStack, world: Level, player: LivingEntity, remainingUseTicks: Int)
     }
 }
 

@@ -1,7 +1,7 @@
 package org.teamvoided.vanillium
 
 import me.fzzyhmstrs.fzzy_config.api.ConfigApi
-import net.minecraft.util.Identifier
+import net.minecraft.resources.ResourceLocation
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.teamvoided.vanillium.config.VanilliumCfg
@@ -22,5 +22,5 @@ object Vanillium {
         VnlEvents.init()
     }
 
-    fun id(path: String): Identifier = Identifier.of(MODID, path)
+    fun id(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(MODID, path)
 }

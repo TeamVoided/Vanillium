@@ -1,88 +1,88 @@
 package org.teamvoided.vanillium.inv
 
-import net.minecraft.block.ShulkerBoxBlock
-import net.minecraft.block.entity.ShulkerBoxBlockEntity.CONTAINER_SIZE
-import net.minecraft.component.DataComponentTypes
-import net.minecraft.component.type.ContainerContentsComponent
-import net.minecraft.entity.Entity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.inventory.StackReference
-import net.minecraft.item.BlockItem
-import net.minecraft.item.ItemStack
-import net.minecraft.screen.slot.Slot
-import net.minecraft.sound.SoundEvents
-import net.minecraft.util.ClickType
+import net.minecraft.core.component.DataComponents.CONTAINER
+import net.minecraft.sounds.SoundEvents.SHULKER_BOX_OPEN
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.SlotAccess
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.inventory.ClickAction
+import net.minecraft.world.inventory.Slot
+import net.minecraft.world.item.BlockItem
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.component.ItemContainerContents
+import net.minecraft.world.level.block.ShulkerBoxBlock
+import net.minecraft.world.level.block.entity.ShulkerBoxBlockEntity.CONTAINER_SIZE
 import kotlin.math.min
 
 fun playInsertSound(entity: Entity) =
-    entity.playSound(SoundEvents.BLOCK_SHULKER_BOX_OPEN, 0.4f, 0.9f + entity.world.getRandom().nextFloat() * 0.4f)
+    entity.playSound(SHULKER_BOX_OPEN, 0.4f, 0.9f + entity.level().getRandom().nextFloat() * 0.4f)
 
 
 fun itemOnShulker(
     stack: ItemStack, otherStack: ItemStack, thisSlot: Slot,
-    clickType: ClickType, player: PlayerEntity, reference: StackReference,
+    clickAction: ClickAction, player: Player, access: SlotAccess,
 ): Boolean? {
-    if (clickType != ClickType.RIGHT) return null
+    if (clickAction != ClickAction.SECONDARY) return null
 
-    val inputStack = reference.get()
-    if (inputStack.isEmpty || !inputStack.item.canBeNested()) return null
+    val inputStack = access.get()
+    if (inputStack.isEmpty || !inputStack.item.canFitInsideContainerItems()) return null
 
     val item = stack.item
     if (item !is BlockItem || item.block !is ShulkerBoxBlock) return null
 
-    val contentsData = stack.get(DataComponentTypes.CONTAINER) ?: return null
+    val contentsData = stack.get(CONTAINER) ?: return null
     val originInventory = contentsData.stream().toList()
-    val inventory = tryToAdd(originInventory.toMutableList(), reference, player)
+    val inventory = tryToAdd(originInventory.toMutableList(), access, player)
     if (inventory != originInventory) {
-        stack.set(DataComponentTypes.CONTAINER, ContainerContentsComponent.fromStacks(inventory))
+        stack.set(CONTAINER, ItemContainerContents.fromItems(inventory))
         playInsertSound(player)
         return true
     }
     return false
 }
 
-fun tryToAdd(inventory: MutableList<ItemStack>, ref: StackReference, player: PlayerEntity): MutableList<ItemStack> {
+fun tryToAdd(inventory: MutableList<ItemStack>, access: SlotAccess, player: Player): MutableList<ItemStack> {
     for (idx in 0 until CONTAINER_SIZE) {
-        val slotItem = ref.get()
+        val slotItem = access.get()
         if (slotItem.isEmpty) break
         if (idx >= inventory.size) {
-            inventory.add(ref.get())
-            ref.set(ItemStack.EMPTY)
+            inventory.add(access.get())
+            access.set(ItemStack.EMPTY)
             break
         }
 
         val invStack = inventory[idx]
         if (invStack.isEmpty) {
-            inventory[idx] = ref.get()
-            ref.set(ItemStack.EMPTY)
+            inventory[idx] = access.get()
+            access.set(ItemStack.EMPTY)
             break
         }
 
-        if (invStack.count != invStack.maxCount && ItemStack.itemsAndComponentsMatch(invStack, ref.get())) {
-            val stack = ref.get()
-            val count = min(stack.count, invStack.maxCount - invStack.count)
+        if (invStack.count != invStack.maxStackSize && ItemStack.isSameItemSameComponents(invStack, access.get())) {
+            val stack = access.get()
+            val count = min(stack.count, invStack.maxStackSize - invStack.count)
             inventory[idx] = invStack.copyWithCount(invStack.count + count)
-            ref.set(stack.copyWithCount(stack.count - count))
-            if (ref.get().isEmpty) break
+            access.set(stack.copyWithCount(stack.count - count))
+            if (access.get().isEmpty) break
         }
     }
 
     return inventory
 }
 
-fun shulkerOnItem(stack: ItemStack, otherSlot: Slot, clickType: ClickType, player: PlayerEntity): Boolean? {
-    if (clickType != ClickType.RIGHT) return null
+fun shulkerOnItem(stack: ItemStack, otherSlot: Slot, clickAction: ClickAction, player: Player): Boolean? {
+    if (clickAction != ClickAction.SECONDARY) return null
 
-    if (otherSlot.stack.isEmpty || !otherSlot.stack.item.canBeNested()) return null
+    if (otherSlot.item.isEmpty || !otherSlot.item.item.canFitInsideContainerItems()) return null
 
     val item = stack.item
     if (item !is BlockItem || item.block !is ShulkerBoxBlock) return null
 
-    val contentsData = stack.get(DataComponentTypes.CONTAINER) ?: return null
+    val contentsData = stack.get(CONTAINER) ?: return null
     val originInventory = contentsData.stream().toList()
     val inventory = tryToAdd(originInventory.toMutableList(), otherSlot, player)
     if (inventory != originInventory) {
-        stack.set(DataComponentTypes.CONTAINER, ContainerContentsComponent.fromStacks(inventory))
+        stack.set(CONTAINER, ItemContainerContents.fromItems(inventory))
         playInsertSound(player)
         return true
     }
@@ -92,27 +92,27 @@ fun shulkerOnItem(stack: ItemStack, otherSlot: Slot, clickType: ClickType, playe
 fun tryToAdd(
     inventory: MutableList<ItemStack>,
     otherSlot: Slot,
-    player: PlayerEntity,
+    player: Player,
 ): MutableList<ItemStack> {
     for (idx in 0 until CONTAINER_SIZE) {
-        val slotItem = otherSlot.stack
+        val slotItem = otherSlot.item
         if (slotItem.isEmpty) break
         if (idx >= inventory.size) {
-            inventory.add(otherSlot.takeStackRange(slotItem.count, slotItem.count, player))
-            if (otherSlot.stack.isEmpty) break
+            inventory.add(otherSlot.safeTake(slotItem.count, slotItem.count, player))
+            if (otherSlot.item.isEmpty) break
         }
 
         if (inventory[idx].isEmpty) {
-            inventory[idx] = otherSlot.takeStackRange(slotItem.count, slotItem.count, player)
+            inventory[idx] = otherSlot.safeTake(slotItem.count, slotItem.count, player)
             break
         }
 
         val invStack = inventory[idx]
-        if (invStack.count != invStack.maxCount && ItemStack.itemsAndComponentsMatch(invStack, otherSlot.stack)) {
-            val count = invStack.maxCount - invStack.count
-            val leftover = otherSlot.takeStackRange(otherSlot.stack.count, count, player).count
+        if (invStack.count != invStack.maxStackSize && ItemStack.isSameItemSameComponents(invStack, otherSlot.item)) {
+            val count = invStack.maxStackSize - invStack.count
+            val leftover = otherSlot.safeTake(otherSlot.item.count, count, player).count
             inventory[idx] = invStack.copyWithCount(invStack.count + leftover)
-            if (otherSlot.stack.isEmpty) break
+            if (otherSlot.item.isEmpty) break
         }
     }
 

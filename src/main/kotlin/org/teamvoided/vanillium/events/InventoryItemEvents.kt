@@ -2,11 +2,11 @@ package org.teamvoided.vanillium.events
 
 import net.fabricmc.fabric.api.event.Event
 import net.fabricmc.fabric.api.event.EventFactory.createArrayBacked
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.inventory.StackReference
-import net.minecraft.item.ItemStack
-import net.minecraft.screen.slot.Slot
-import net.minecraft.util.ClickType
+import net.minecraft.world.entity.SlotAccess
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.inventory.ClickAction
+import net.minecraft.world.inventory.Slot
+import net.minecraft.world.item.ItemStack
 
 object InventoryItemEvents {
 
@@ -19,9 +19,9 @@ object InventoryItemEvents {
     @JvmField
     val ON_CLICKED_ON_OTHER: Event<OnClickedOnOtherCallback> =
         createArrayBacked(OnClickedOnOtherCallback::class.java) { listeners ->
-            OnClickedOnOtherCallback { stack, otherSlot, clickType, player ->
+            OnClickedOnOtherCallback { stack, otherSlot, clickAction, player ->
                 for (callback in listeners) {
-                    val returnValue = callback.interact(stack, otherSlot, clickType, player)
+                    val returnValue = callback.interact(stack, otherSlot, clickAction, player)
                     if (returnValue != null) {
                         return@OnClickedOnOtherCallback returnValue
                     }
@@ -39,10 +39,10 @@ object InventoryItemEvents {
     @JvmField
     val ON_CLICKED: Event<OnClickedCallback> =
         createArrayBacked(OnClickedCallback::class.java) { listeners ->
-            OnClickedCallback { stack, otherStack, thisSlot, clickType, player, cursorStackReference ->
+            OnClickedCallback { stack, otherStack, thisSlot, clickAction, player, cursorSlotAccess ->
                 for (callback in listeners) {
                     val returnValue =
-                        callback.interact(stack, otherStack, thisSlot, clickType, player, cursorStackReference)
+                        callback.interact(stack, otherStack, thisSlot, clickAction, player, cursorSlotAccess)
                     if (returnValue != null) {
                         return@OnClickedCallback returnValue
                     }
@@ -53,7 +53,7 @@ object InventoryItemEvents {
 
 
     fun interface OnClickedOnOtherCallback {
-        fun interact(stack: ItemStack, otherSlot: Slot, clickType: ClickType, player: PlayerEntity): Boolean?
+        fun interact(stack: ItemStack, otherSlot: Slot, clickAction: ClickAction, player: Player): Boolean?
     }
 
     fun interface OnClickedCallback {
@@ -61,9 +61,9 @@ object InventoryItemEvents {
             stack: ItemStack,
             otherStack: ItemStack,
             thisSlot: Slot,
-            clickType: ClickType,
-            player: PlayerEntity,
-            cursorStackReference: StackReference,
+            clickAction: ClickAction,
+            player: Player,
+            cursorSlotAccess: SlotAccess,
         ): Boolean?
     }
 }
