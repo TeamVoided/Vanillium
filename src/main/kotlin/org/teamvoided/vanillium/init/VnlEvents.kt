@@ -81,7 +81,8 @@ object VnlEvents {
             if (!result.result.noAction() && shouldCauseCooldown(player)) {
                 val stack = result.getObject()
                 if (
-                    (stack.item !is ThrowablePotionItem && stack.useAnimation == UseAnim.NONE) ||
+                    stack.item is ThrowablePotionItem ||
+                    stack.useAnimation == UseAnim.NONE ||
                     (stack.get(CHARGED_PROJECTILES)?.isEmpty == false && stack.useOnRelease())
                 ) {
                     cooldown(stack, player)
