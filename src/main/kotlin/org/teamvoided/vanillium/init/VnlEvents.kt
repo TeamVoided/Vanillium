@@ -2,6 +2,7 @@ package org.teamvoided.vanillium.init
 
 import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
+import net.minecraft.core.component.DataComponents
 import net.minecraft.core.component.DataComponents.CHARGED_PROJECTILES
 import net.minecraft.core.component.DataComponents.MAX_STACK_SIZE
 import net.minecraft.world.InteractionResult
@@ -29,7 +30,11 @@ object VnlEvents {
             for ((item, count) in config.customStackSizes) {
                 ctx.modify(item) { it.set(MAX_STACK_SIZE, count) }
             }
+            for ((item, damage) in config.customMaxDamage) {
+                ctx.modify(item) { it.set(DataComponents.MAX_DAMAGE, damage) }
+            }
         }
+
         UseItemCallback.EVENT.register { player, world, hand ->
 
             if (!player.isSpectator) {
