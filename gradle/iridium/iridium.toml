@@ -12,7 +12,7 @@ fabricApiVersion = "0.116.0+1.21.1"
 fabricLangKotlinVersion = "1.13.2+kotlin.2.1.20"
 license = "MIT"
 modules = [ ]
-modDescription = "Vanillium is like nullium but for both client and server."
+modDescription = "A collection of many small vanill-ish features."
 # Modmenu badges, values can be: [ library, deprecated ]
 badges = [ ]
 disableKotlin = false
