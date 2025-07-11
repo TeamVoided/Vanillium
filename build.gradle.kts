@@ -116,13 +116,16 @@ publishScript {
 
 uploadConfig {
 //    debugMode = true
-    modrinthId = "id"
-    curseId = "0"
+    modrinthId = "xRaXieJP"
+//    curseId = "0"
 
     // FabricApi
     modrinthDependency("P7dR8mSH", uploadConfig.REQUIRED)
-    curseDependency("fabric-api", uploadConfig.REQUIRED)
+//    curseDependency("fabric-api", uploadConfig.REQUIRED)
     // Fabric Language Kotlin
     modrinthDependency("Ha28R6CL", uploadConfig.REQUIRED)
-    curseDependency("fabric-language-kotlin", uploadConfig.REQUIRED)
+//    curseDependency("fabric-language-kotlin", uploadConfig.REQUIRED)
+    // Fzzy config
+    modrinthDependency("hYykXjDp", uploadConfig.REQUIRED)
+//    curseDependency("fabric-api", uploadConfig.REQUIRED)
 }
