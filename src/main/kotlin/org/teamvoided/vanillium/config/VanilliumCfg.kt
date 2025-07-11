@@ -13,6 +13,7 @@ import org.teamvoided.vanillium.Vanillium.id
 
 @Suppress("unused")
 class VanilliumCfg : Config(id(MODID)) {
+    // region Items
     var items = ConfigGroup("items", false)
 
     @RequiresAction(Action.RESTART)
@@ -57,7 +58,15 @@ class VanilliumCfg : Config(id(MODID)) {
     var customCooldowns = mutableMapOf(SPLASH_POTION to 30, LINGERING_POTION to 60)
 
     @ConfigGroup.Pop
-    var shulkerInventoryInsert = true
+    var extendedPotionDuration = ValidatedFloat(2f, 10f, .1f, WidgetType.TEXTBOX_WITH_BUTTONS).withIncrement(0.1f)
+    // endregion
 
-    var extendedPotionDuration = ValidatedFloat(1.5f, 10f, 0.1f, WidgetType.TEXTBOX_WITH_BUTTONS).withIncrement(0.1f)
+    // region Experimental
+    var experimental = ConfigGroup("experimental", true)
+    var shulkerInventoryInsert = false
+    var canOpenSkulkersInInventor = false
+
+    @ConfigGroup.Pop
+    var canOpenSkulkersWhenInHand = false
+    // endregion
 }

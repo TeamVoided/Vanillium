@@ -7,6 +7,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.ShulkerBoxBlock
+import org.teamvoided.vanillium.client.init.VnlClientNet
 import org.teamvoided.vanillium.client.screen.OpenShulkerBoxScreen
 import org.teamvoided.vanillium.init.VnlMenus
 
@@ -14,6 +15,7 @@ import org.teamvoided.vanillium.init.VnlMenus
 object VanilliumClient {
     fun init() {
         MenuScreens.register(VnlMenus.QUICK_SHULKER, ::OpenShulkerBoxScreen)
+        VnlClientNet.init()
     }
 
     @JvmStatic

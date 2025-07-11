@@ -7,6 +7,7 @@
     "ItemStackMixin",
     "PotionItemMixin",
     "PotionMixin",
+    "ServerPlayerAccessor",
     "accessors.MobEffectInstanceAccessor"
   ],
   "injectors": {

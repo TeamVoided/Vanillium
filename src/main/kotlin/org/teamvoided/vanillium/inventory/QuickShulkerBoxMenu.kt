@@ -82,7 +82,7 @@ class QuickShulkerBoxMenu(i: Int, inventory: Inventory, var container: Container
     companion object {
         private const val CONTAINER_SIZE = 27
 
-        fun openShulker(stack: ItemStack, blockedSlot: Int) = object : MenuProvider {
+        fun shulkerMenuProvider(stack: ItemStack, blockedSlot: Int) = object : MenuProvider {
             override fun getDisplayName(): Component? = stack.hoverName
             override fun createMenu(i: Int, inventory: Inventory, player: Player): AbstractContainerMenu? {
                 return QuickShulkerBoxMenu(i, inventory, SimpleStackBasedContainer(stack, CONTAINER_SIZE), blockedSlot)

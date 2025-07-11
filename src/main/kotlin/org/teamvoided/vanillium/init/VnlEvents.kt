@@ -5,6 +5,8 @@ import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.component.DataComponents.CHARGED_PROJECTILES
 import net.minecraft.core.component.DataComponents.MAX_STACK_SIZE
+import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.SlotAccess
@@ -15,14 +17,15 @@ import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ThrowablePotionItem
 import net.minecraft.world.item.UseAnim
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.ShulkerBoxBlock
 import org.teamvoided.vanillium.Vanillium.config
 import org.teamvoided.vanillium.events.InventoryItemEvents
 import org.teamvoided.vanillium.events.PostUseItemEvents
-import org.teamvoided.vanillium.inventory.QuickShulkerBoxMenu.Companion.openShulker
 import org.teamvoided.vanillium.inventory.itemOnShulker
 import org.teamvoided.vanillium.inventory.playInsertSound
 import org.teamvoided.vanillium.inventory.shulkerOnItem
+import org.teamvoided.vanillium.util.openShulker
 
 object VnlEvents {
     fun init() {
@@ -35,24 +38,24 @@ object VnlEvents {
             }
         }
 
-        UseItemCallback.EVENT.register { player, world, hand ->
-
-            if (!player.isSpectator) {
-                val stack = player.getItemInHand(hand)
-                val item = stack.item
-                if (item is BlockItem && item.block is ShulkerBoxBlock) {
-                    player.openMenu(openShulker(stack, player.inventory.selected))
-                    playInsertSound(player)
-                    InteractionResultHolder.success(stack)
-                }
-            }
-            InteractionResultHolder.pass(ItemStack.EMPTY)
-        }
-
-
+        UseItemCallback.EVENT.register(::onUseItem)
         cooldownEvents()
         InventoryItemEvents.ON_CLICKED_ON_OTHER.register(::onClickedOnOther)
         InventoryItemEvents.ON_CLICKED.register(::onClicked)
+    }
+
+    fun onUseItem(player: Player, world: Level, hand: InteractionHand): InteractionResultHolder<ItemStack> {
+        if (!player.isSpectator && config.canOpenSkulkersWhenInHand) {
+            val stack = player.getItemInHand(hand)
+            val item = stack.item
+            if (item is BlockItem && item.block is ShulkerBoxBlock) {
+                if (player is ServerPlayer) player.openShulker(stack, player.inventory.selected)
+                playInsertSound(player)
+                InteractionResultHolder.success(stack)
+            }
+        }
+
+        return InteractionResultHolder.pass(ItemStack.EMPTY)
     }
 
     fun onClickedOnOther(stack: ItemStack, otherSlot: Slot, clickAction: ClickAction, player: Player): Boolean? {
@@ -68,11 +71,8 @@ object VnlEvents {
         stack: ItemStack, otherStack: ItemStack, thisSlot: Slot,
         clickAction: ClickAction, player: Player, cursorSlot: SlotAccess,
     ): Boolean? {
-        if (config.shulkerInventoryInsert) {
-            val value = itemOnShulker(stack, otherStack, thisSlot, clickAction, player, cursorSlot)
-            if (value != null) return value
-        }
-
+        val value = itemOnShulker(stack, otherStack, thisSlot, clickAction, player, cursorSlot)
+        if (value != null) return value
         return null
     }
 

@@ -13,8 +13,8 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.component.ItemContainerContents
 import net.minecraft.world.level.block.ShulkerBoxBlock
 import net.minecraft.world.level.block.entity.ShulkerBoxBlockEntity.CONTAINER_SIZE
-import org.apache.logging.log4j.core.jmx.Server
-import org.teamvoided.vanillium.inventory.QuickShulkerBoxMenu.Companion.openShulker
+import org.teamvoided.vanillium.Vanillium.config
+import org.teamvoided.vanillium.util.openShulker
 import kotlin.math.min
 
 fun playInsertSound(entity: Entity) =
@@ -29,21 +29,22 @@ fun itemOnShulker(
     if (!thisSlot.allowModification(player)) return null
 
     val inputStack = access.get()
-    if (!inputStack.item.canFitInsideContainerItems()) return null
 
     val item = stack.item
     if (item !is BlockItem || item.block !is ShulkerBoxBlock) return null
 
     val contentsData = stack.get(CONTAINER) ?: return null
 
-    if (inputStack.isEmpty) {
-        if (player is ServerPlayer){
+    if (inputStack.isEmpty && config.canOpenSkulkersInInventor) {
+        if (player is ServerPlayer) {
             player.closeContainer()
+            player.openShulker(stack, thisSlot.containerSlot)
         }
-        player.openMenu(openShulker(stack, thisSlot.containerSlot))
         playInsertSound(player)
         return true
     }
+    if (!config.shulkerInventoryInsert) return null
+    if (!inputStack.item.canFitInsideContainerItems()) return null
 
     val originInventory = contentsData.stream().toList()
     val inventory = tryToAdd(originInventory.toMutableList(), access, player)
