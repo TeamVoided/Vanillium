@@ -19,9 +19,6 @@ This is a sister mod to Nullium as it adds features that cant be server-side onl
   equipment to be 16)
 - Changing item max durability size. (By default, the mod increases brush and shear durability to 256)
 - Adding custom cooldowns to items. (By default, the mod adds cooldowns to splash and lingering potions)
-
-## Miscellaneous
-
 - Extended Potion durability. A multipliers applied to all registered potions. (By default, it's set to be x2)
 
 ## Experimental
