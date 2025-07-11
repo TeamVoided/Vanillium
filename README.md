@@ -25,7 +25,7 @@ This is a sister mod to Nullium as it adds features that cant be server-side onl
 - Extended Potion durability. A multipliers applied to all registered potions. (By default, it's set to be x2)
 
 ## Experimental
-
+ Warning All these are experimental for a reason. The shulker opening my cause inventory de-sync.
 - Shulker changes:
     - When in inventory, if you right-click with an item on or use a shulker to right-click on an item. It now puts the
       item in the shulker.
