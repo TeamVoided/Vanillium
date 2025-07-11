@@ -1,2 +1,2 @@
-# The TeamVoided Template
-Template mod by TeamVoided
+# Vanillium
+Vanillium is like nullium but for both client and server.
