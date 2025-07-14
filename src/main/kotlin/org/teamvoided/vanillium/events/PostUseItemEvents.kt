@@ -4,7 +4,6 @@ import net.fabricmc.fabric.api.event.Event
 import net.fabricmc.fabric.api.event.EventFactory.createArrayBacked
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
-import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
@@ -14,8 +13,8 @@ import net.minecraft.world.level.Level
 object PostUseItemEvents {
     @JvmField
     val POST_USE: Event<PostUseItemCallback> = createArrayBacked(PostUseItemCallback::class.java) { listeners ->
-        PostUseItemCallback { returned, world, player, hand ->
-            listeners.forEach { it.interact(returned, world, player, hand) }
+        PostUseItemCallback { returned, stack, world, player, hand ->
+            listeners.forEach { it.interact(returned,stack, world, player, hand) }
         }
     }
 
@@ -36,11 +35,12 @@ object PostUseItemEvents {
         }
 
     @JvmField
-    val POST_FINISH_USING: Event<PostUsingItemCallback> = createArrayBacked(PostUsingItemCallback::class.java) { listeners ->
-        PostUsingItemCallback { returned, usedSTack, world, player ->
-            listeners.forEach { it.interact(returned, usedSTack, world, player) }
+    val POST_FINISH_USING: Event<PostUsingItemCallback> =
+        createArrayBacked(PostUsingItemCallback::class.java) { listeners ->
+            PostUsingItemCallback { returned, usedSTack, world, player ->
+                listeners.forEach { it.interact(returned, usedSTack, world, player) }
+            }
         }
-    }
 
     @JvmField
     val POST_RELEASE_USING: Event<PostStopUsingItemCallback> =
@@ -51,7 +51,7 @@ object PostUseItemEvents {
         }
 
     fun interface PostUseItemCallback {
-        fun interact(returned: InteractionResultHolder<ItemStack>, world: Level, player: Player, hand: InteractionHand)
+        fun interact(returned: InteractionResult, stack: ItemStack, world: Level, player: Player, hand: InteractionHand)
     }
 
     fun interface PostUseOnBlockItemCallback {

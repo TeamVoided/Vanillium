@@ -1,25 +1,25 @@
 [versions]
 kotlin = "2.1.20"
-fabric-loom = "1.10-SNAPSHOT"
+fabric-loom = "1.11-SNAPSHOT"
 iridium = "3.5.0"
 # Dependencies
-fzzy-config = "0.7.0+1.21"
+fzzy-config = "0.7.0+1.21.6"
 # QoL
-modmenu = "11.0.3"
-emi = "1.1.22+1.21.1"
+modmenu = "15.0.0-beta.3"
+#emi = "1.1.22+1.21.1"
 # Testing
-creative-works = "0.4.0"
-imguimc = "1.21.1-1.0.8"
+#creative-works = "0.4.0"
+#imguimc = "1.21.1-1.0.8"
 
 [libraries]
 # Dependencies
 fzzy-config = { module = "me.fzzyhmstrs:fzzy_config", version.ref = "fzzy-config" }
 # QoL
 modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }
-emi = { module = "dev.emi:emi-fabric", version.ref = "emi" }
+#emi = { module = "dev.emi:emi-fabric", version.ref = "emi" }
 # Testing
-creative-works = { module = "org.teamvoided:creative_works", version.ref = "creative-works" }
-imguimc = { module = "maven.modrinth:imgui-mc", version.ref = "imguimc" }
+#creative-works = { module = "org.teamvoided:creative_works", version.ref = "creative-works" }
+#imguimc = { module = "maven.modrinth:imgui-mc", version.ref = "imguimc" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

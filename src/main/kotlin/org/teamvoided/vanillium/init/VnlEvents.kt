@@ -8,15 +8,14 @@ import net.minecraft.core.component.DataComponents.MAX_STACK_SIZE
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
-import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.SlotAccess
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ClickAction
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemUseAnimation
 import net.minecraft.world.item.ThrowablePotionItem
-import net.minecraft.world.item.UseAnim
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.ShulkerBoxBlock
 import org.teamvoided.vanillium.Vanillium.config
@@ -44,18 +43,18 @@ object VnlEvents {
         InventoryItemEvents.ON_CLICKED.register(::onClicked)
     }
 
-    fun onUseItem(player: Player, world: Level, hand: InteractionHand): InteractionResultHolder<ItemStack> {
+    fun onUseItem(player: Player, world: Level, hand: InteractionHand): InteractionResult {
         if (!player.isSpectator && config.canOpenSkulkersWhenInHand) {
             val stack = player.getItemInHand(hand)
             val item = stack.item
             if (item is BlockItem && item.block is ShulkerBoxBlock) {
-                if (player is ServerPlayer) player.openShulker(stack, player.inventory.selected)
+                if (player is ServerPlayer) player.openShulker(stack, player.inventory.selectedSlot)
                 playInsertSound(player)
-                InteractionResultHolder.success(stack)
+                return InteractionResult.SUCCESS
             }
         }
 
-        return InteractionResultHolder.pass(ItemStack.EMPTY)
+        return InteractionResult.PASS
     }
 
     fun onClickedOnOther(stack: ItemStack, otherSlot: Slot, clickAction: ClickAction, player: Player): Boolean? {
@@ -77,12 +76,12 @@ object VnlEvents {
     }
 
     fun cooldownEvents() {
-        PostUseItemEvents.POST_USE.register { result, world, player, hand ->
-            if (!result.result.noAction() && shouldCauseCooldown(player)) {
-                val stack = result.getObject()
+        PostUseItemEvents.POST_USE.register { result, stack, world, player, hand ->
+            if (!result.noAction() && shouldCauseCooldown(player)) {
+                val stack = stack
                 if (
                     stack.item is ThrowablePotionItem ||
-                    stack.useAnimation == UseAnim.NONE ||
+                    stack.useAnimation == ItemUseAnimation.NONE ||
                     (stack.get(CHARGED_PROJECTILES)?.isEmpty == false && stack.useOnRelease())
                 ) {
                     cooldown(stack, player)
@@ -91,7 +90,7 @@ object VnlEvents {
         }
         PostUseItemEvents.POST_USE_ON_BLOCK.register { result, ctx ->
             val player = ctx.player
-            if (player != null && shouldCauseCooldown(player) && !result.noAction() && result != InteractionResult.CONSUME_PARTIAL) {
+            if (player != null && shouldCauseCooldown(player) && !result.noAction()) {
                 cooldown(ctx.itemInHand, player)
             }
         }
@@ -110,7 +109,7 @@ object VnlEvents {
 
         PostUseItemEvents.POST_RELEASE_USING.register { stack, world, player, remainingUseTicks ->
             if (player is Player && shouldCauseCooldown(player) &&
-                (stack.useOnRelease() || (stack.useAnimation != UseAnim.EAT && stack.useAnimation != UseAnim.DRINK))
+                (stack.useOnRelease() || (stack.useAnimation != ItemUseAnimation.EAT && stack.useAnimation != ItemUseAnimation.DRINK))
             ) {
                 cooldown(stack, player)
             }
@@ -121,13 +120,12 @@ object VnlEvents {
     fun shouldCauseCooldown(player: Player) = config.enableCooldownsInCreative || !player.isCreative
     fun cooldown(stack: ItemStack, player: Player) {
         if (stack.isEmpty) return
-        val item = stack.item
-        val cooldown = config.customCooldowns[item]
-        if (cooldown != null) player.cooldowns.let {
-            if (it.isOnCooldown(item)) {
-                it.removeCooldown(item)
+        val cooldown = config.customCooldowns[stack.item]
+        if (cooldown != null) {
+            if (player.cooldowns.isOnCooldown(stack)) {
+                player.cooldowns.removeCooldown(player.cooldowns.getCooldownGroup(stack))
             }
-            it.addCooldown(item, cooldown)
+            player.cooldowns.addCooldown(stack, cooldown)
         }
     }
 }

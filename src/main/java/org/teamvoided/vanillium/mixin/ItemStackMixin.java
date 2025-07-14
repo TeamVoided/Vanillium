@@ -5,7 +5,6 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.player.Player;
@@ -26,8 +25,8 @@ import org.teamvoided.vanillium.events.PostUseItemEvents;
 public class ItemStackMixin {
 
     @ModifyReturnValue(method = "use", at = @At("RETURN"))
-    private InteractionResultHolder<ItemStack> postUseHook(InteractionResultHolder<ItemStack> original, Level world, Player player, InteractionHand hand) {
-        PostUseItemEvents.POST_USE.invoker().interact(original, world, player, hand);
+    private InteractionResult postUseHook(InteractionResult original, Level world, Player player, InteractionHand hand) {
+        PostUseItemEvents.POST_USE.invoker().interact(original, (ItemStack) (Object) this, world, player, hand);
         return original;
     }
 

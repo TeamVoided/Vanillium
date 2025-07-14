@@ -44,11 +44,11 @@ dependencies {
     modImplementation(libs.fzzy.config)
     // QoL
     modImplementation(libs.modmenu)
-    modCompileOnly("${libs.emi.get()}:api")
-    modLocalRuntime(libs.emi)
+//    modCompileOnly("${libs.emi.get()}:api")
+//    modLocalRuntime(libs.emi)
     // Testing
-    modImplementation(libs.creative.works)
-    modImplementation(libs.imguimc)
+//    modImplementation(libs.creative.works)
+//    modImplementation(libs.imguimc)
 }
 val username = "vDev"
 val uuid: String? = null

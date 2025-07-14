@@ -4,6 +4,7 @@ import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
+import net.minecraft.client.renderer.RenderPipelines
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.inventory.AbstractContainerMenu
@@ -22,7 +23,10 @@ class OpenShulkerBoxScreen<T : AbstractContainerMenu>(menu: T, inventory: Invent
     override fun renderBg(guiGraphics: GuiGraphics, f: Float, i: Int, j: Int) {
         val k = (this.width - this.imageWidth) / 2
         val l = (this.height - this.imageHeight) / 2
-        guiGraphics.blit(CONTAINER_TEXTURE, k, l, 0, 0, this.imageWidth, this.imageHeight)
+        guiGraphics.blit(
+            RenderPipelines.GUI_TEXTURED, CONTAINER_TEXTURE,
+            k, l, 0.0f, 0.0f, this.imageWidth, this.imageHeight, 256, 256
+        )
     }
 
     companion object {
