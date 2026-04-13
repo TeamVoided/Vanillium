@@ -14,6 +14,6 @@ import static org.teamvoided.vanillium.util.MixinImplKt.modifyPotionEffectDurati
 public class PotionMixin {
     @ModifyReturnValue(method = "getEffects", at = @At("RETURN"))
     List<MobEffectInstance> multiplyEffectDuration(List<MobEffectInstance> original) {
-        return modifyPotionEffectDuration(original, (Potion) (Object)this);
+        return modifyPotionEffectDuration(original, (Potion) (Object) this);
     }
 }

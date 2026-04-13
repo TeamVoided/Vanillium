@@ -237,7 +237,6 @@ class VanilliumCfg : Config(id(MODID)) {
             Potions.LONG_POISON.value(),
             Potions.STRONG_POISON.value(),
 
-
             Potions.TURTLE_MASTER.value(),
             Potions.LONG_TURTLE_MASTER.value(),
             Potions.STRONG_TURTLE_MASTER.value(),

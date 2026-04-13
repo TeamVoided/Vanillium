@@ -14,7 +14,7 @@ object PostUseItemEvents {
     @JvmField
     val POST_USE: Event<PostUseItemCallback> = createArrayBacked(PostUseItemCallback::class.java) { listeners ->
         PostUseItemCallback { returned, stack, world, player, hand ->
-            listeners.forEach { it.interact(returned,stack, world, player, hand) }
+            listeners.forEach { it.interact(returned, stack, world, player, hand) }
         }
     }
 
