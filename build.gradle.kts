@@ -47,7 +47,7 @@ dependencies {
 //    modCompileOnly("${libs.emi.get()}:api")
 //    modLocalRuntime(libs.emi)
     // Testing
-//    modImplementation(libs.creative.works)
+    modImplementation(libs.creative.works)
 //    modImplementation(libs.imguimc)
 }
 val username = "vDev"
@@ -55,6 +55,14 @@ val uuid: String? = null
 
 loom {
     splitEnvironmentSourceSets()
+
+    mods {
+        register(modSettings.modId()) {
+            sourceSet(sourceSets.main.get())
+            sourceSet(sourceSets.getByName("client"))
+        }
+    }
+
     runs {
         named("client") {
             programArgs("--username", username)
