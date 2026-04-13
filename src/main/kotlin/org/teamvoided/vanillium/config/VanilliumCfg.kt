@@ -59,35 +59,11 @@ class VanilliumCfg : Config(id(MODID)) {
             MILK_BUCKET to 16,
             // Horse Armor
             LEATHER_HORSE_ARMOR to 16,
-            COPPER_HORSE_ARMOR to 16,
             IRON_HORSE_ARMOR to 16,
             GOLDEN_HORSE_ARMOR to 16,
             DIAMOND_HORSE_ARMOR to 16,
-            NETHERITE_HORSE_ARMOR to 16,
-            // Nautilus Armor
-            COPPER_NAUTILUS_ARMOR to 16,
-            IRON_NAUTILUS_ARMOR to 16,
-            GOLDEN_NAUTILUS_ARMOR to 16,
-            DIAMOND_NAUTILUS_ARMOR to 16,
-            NETHERITE_NAUTILUS_ARMOR to 16,
             // Animal Equipment
             SADDLE to 16,
-            WHITE_HARNESS to 16,
-            ORANGE_HARNESS to 16,
-            MAGENTA_HARNESS to 16,
-            LIGHT_BLUE_HARNESS to 16,
-            YELLOW_HARNESS to 16,
-            LIME_HARNESS to 16,
-            PINK_HARNESS to 16,
-            GRAY_HARNESS to 16,
-            LIGHT_GRAY_HARNESS to 16,
-            CYAN_HARNESS to 16,
-            PURPLE_HARNESS to 16,
-            BLUE_HARNESS to 16,
-            BROWN_HARNESS to 16,
-            GREEN_HARNESS to 16,
-            RED_HARNESS to 16,
-            BLACK_HARNESS to 16,
             // Transport
             MINECART to 4,
             OAK_BOAT to 4,
@@ -97,13 +73,10 @@ class VanilliumCfg : Config(id(MODID)) {
             ACACIA_BOAT to 4,
             CHERRY_BOAT to 4,
             DARK_OAK_BOAT to 4,
-            PALE_OAK_BOAT to 4,
             MANGROVE_BOAT to 4,
             // Misc
             SNOWBALL to 64,
             EGG to 64,
-            BROWN_EGG to 64,
-            BLUE_EGG to 64,
             HONEY_BOTTLE to 64,
             ARMOR_STAND to 64,
             // Pattern
@@ -115,8 +88,6 @@ class VanilliumCfg : Config(id(MODID)) {
             PIGLIN_BANNER_PATTERN to 64,
             FLOW_BANNER_PATTERN to 64,
             GUSTER_BANNER_PATTERN to 64,
-            FIELD_MASONED_BANNER_PATTERN to 64,
-            BORDURE_INDENTED_BANNER_PATTERN to 64,
             // Banner
             WHITE_BANNER to 64,
             ORANGE_BANNER to 64,
@@ -176,8 +147,6 @@ class VanilliumCfg : Config(id(MODID)) {
             MUSIC_DISC_5 to 16,
             MUSIC_DISC_PIGSTEP to 16,
             MUSIC_DISC_PRECIPICE to 16,
-            MUSIC_DISC_TEARS to 16,
-            MUSIC_DISC_LAVA_CHICKEN to 16
         ).build()
 
     var enableCooldownsInCreative = true
