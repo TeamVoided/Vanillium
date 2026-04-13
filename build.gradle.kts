@@ -36,6 +36,7 @@ modSettings {
 
 //    mixinFile("${modId()}.client.mixins.json")
     mixinFile("${modId()}.mixins.json")
+    dependency("fzzy_config", "*")
 }
 
 dependencies {
