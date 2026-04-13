@@ -15,7 +15,7 @@ object VnlClientNet {
         val player = client.player ?: return
         val inv = player.getInventory()
         val menu = shulkerMenuProvider(inv.getItem(packet.lockedSlot), packet.lockedSlot)
-        player.containerMenu = menu.createMenu(packet.containerId, inv, player)
+        player.containerMenu = menu.createMenu(packet.containerId, inv, player)!!
         client.setScreen(null)
         client.setScreen(OpenShulkerBoxScreen(player.containerMenu, inv, menu.displayName))
     }

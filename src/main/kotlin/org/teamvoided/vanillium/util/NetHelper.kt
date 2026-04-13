@@ -14,6 +14,6 @@ fun ServerPlayer.openShulker(stack: ItemStack, lockedSlot: Int) {
     (this as ServerPlayerAccessor).vnl_invokeNextContainerCounter()
     val containerCounter = (this as ServerPlayerAccessor).nvl_getContainerCounter()
     ServerPlayNetworking.send(this, OpenShulkerScreenPacket(containerCounter, lockedSlot))
-    this.containerMenu = shulkerMenuProvider(stack, lockedSlot).createMenu(containerCounter, this.getInventory(), this)
+    this.containerMenu = shulkerMenuProvider(stack, lockedSlot).createMenu(containerCounter, this.getInventory(), this)!!
     (this as ServerPlayerAccessor).vnl_invokeInitMenu(this.containerMenu)
 }
