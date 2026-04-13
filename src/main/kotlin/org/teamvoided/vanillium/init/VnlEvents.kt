@@ -29,11 +29,15 @@ import org.teamvoided.vanillium.util.openShulker
 object VnlEvents {
     fun init() {
         DefaultItemComponentEvents.MODIFY.register { ctx ->
-            for ((item, count) in config.customStackSizes) {
-                ctx.modify(item) { it.set(MAX_STACK_SIZE, count) }
+            if (config.customStackSizes.isNotEmpty()) {
+                for ((item, count) in config.customStackSizes) {
+                    ctx.modify(item) { it.set(MAX_STACK_SIZE, count) }
+                }
             }
-            for ((item, damage) in config.customMaxDamage) {
-                ctx.modify(item) { it.set(DataComponents.MAX_DAMAGE, damage) }
+            if (config.customMaxDamage.isNotEmpty()) {
+                for ((item, damage) in config.customMaxDamage) {
+                    ctx.modify(item) { it.set(DataComponents.MAX_DAMAGE, damage) }
+                }
             }
         }
 
