@@ -1,1 +1,5 @@
 - 1.21.11 port
+- Tweaked stackable defaults list
+- Tweaked max damage defaults list
+- Extended potion duration now has an allow / deny list
+    - Default is a deny list of: poison, turtle_master, regeneration, strength, weakness

@@ -106,6 +106,9 @@ class VanilliumCfg : Config(id(MODID)) {
             BLUE_EGG to 64,
             HONEY_BOTTLE to 64,
             ARMOR_STAND to 64,
+            CAKE to 64,
+            WRITABLE_BOOK to 64,
+            WRITTEN_BOOK to 64,
             // Pattern
             FLOWER_BANNER_PATTERN to 64,
             CREEPER_BANNER_PATTERN to 64,
@@ -156,6 +159,32 @@ class VanilliumCfg : Config(id(MODID)) {
             BEETROOT_SOUP to 16,
             RABBIT_STEW to 16,
             SUSPICIOUS_STEW to 16,
+            // Signs
+            OAK_SIGN to 64,
+            SPRUCE_SIGN to 64,
+            BIRCH_SIGN to 64,
+            JUNGLE_SIGN to 64,
+            ACACIA_SIGN to 64,
+            CHERRY_SIGN to 64,
+            DARK_OAK_SIGN to 64,
+            PALE_OAK_SIGN to 64,
+            MANGROVE_SIGN to 64,
+            BAMBOO_SIGN to 64,
+            CRIMSON_SIGN to 64,
+            WARPED_SIGN to 64,
+            // Hanging Signs
+            OAK_HANGING_SIGN to 64,
+            SPRUCE_HANGING_SIGN to 64,
+            BIRCH_HANGING_SIGN to 64,
+            JUNGLE_HANGING_SIGN to 64,
+            ACACIA_HANGING_SIGN to 64,
+            CHERRY_HANGING_SIGN to 64,
+            DARK_OAK_HANGING_SIGN to 64,
+            PALE_OAK_HANGING_SIGN to 64,
+            MANGROVE_HANGING_SIGN to 64,
+            BAMBOO_HANGING_SIGN to 64,
+            CRIMSON_HANGING_SIGN to 64,
+            WARPED_HANGING_SIGN to 64,
             // Discs
             MUSIC_DISC_13 to 16,
             MUSIC_DISC_CAT to 16,
@@ -189,7 +218,7 @@ class VanilliumCfg : Config(id(MODID)) {
             LINGERING_POTION to 60
         ).build()
 
-    var extendedPotionDurationGroup = ConfigGroup("extended_potion_duration", false)
+    var extendedPotionDuration = ConfigGroup("extended_potion_duration", false)
 
     var duration = ValidatedFloat(2f, 10f, .1f, WidgetType.TEXTBOX_WITH_BUTTONS).withIncrement(0.1f)
     var durationMode = ValidatedEnum(ListType.DENY_LIST)
@@ -207,6 +236,7 @@ class VanilliumCfg : Config(id(MODID)) {
             Potions.POISON.value(),
             Potions.LONG_POISON.value(),
             Potions.STRONG_POISON.value(),
+
 
             Potions.TURTLE_MASTER.value(),
             Potions.LONG_TURTLE_MASTER.value(),
