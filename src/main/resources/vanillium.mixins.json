@@ -7,7 +7,9 @@
     "ItemStackMixin",
     "PotionMixin",
     "ServerPlayerAccessor",
-    "accessors.MobEffectInstanceAccessor"
+    "accessors.MobEffectInstanceAccessor",
+    "furnacefix.AbstractFurnaceBlockEntityMixin",
+    "furnacefix.FurnaceFuelSlotMixin"
   ],
   "injectors": {
     "defaultRequire": 1
