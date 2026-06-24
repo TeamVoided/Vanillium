@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.minecraft.core.RegistrySetBuilder
 import org.teamvoided.vanillium.Vanillium.log
+import org.teamvoided.vanillium.data.gen.data.tag.BlockTagsProv
 
 @Suppress("unused")
 object VanilliumData : DataGeneratorEntrypoint {
@@ -11,7 +12,7 @@ object VanilliumData : DataGeneratorEntrypoint {
         log.info("Hello from DataGen")
         val pack = gen.createPack()
 
-//        pack.addProvider(::TemplateWorldGenerator)
+        pack.addProvider(::BlockTagsProv)
     }
 
     override fun buildRegistry(gen: RegistrySetBuilder) {

@@ -7,6 +7,7 @@
     "ItemStackMixin",
     "PotionMixin",
     "ServerPlayerAccessor",
+    "ToolMaterialMixin",
     "accessors.MobEffectInstanceAccessor",
     "furnacefix.AbstractFurnaceBlockEntityMixin",
     "furnacefix.FurnaceFuelSlotMixin"

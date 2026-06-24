@@ -16,8 +16,7 @@ object Vanillium {
     @JvmField
     val log: Logger = LoggerFactory.getLogger(Vanillium::class.simpleName)
 
-    @JvmField
-    var config = ConfigApi.registerAndLoadConfig(::VanilliumCfg)
+    val config by lazy { ConfigApi.registerAndLoadConfig(::VanilliumCfg) }
 
     fun init() {
         log.info("Vanillaing Vanilla")
