@@ -1,5 +1,2 @@
-- 1.21.11 port
-- Tweaked stackable defaults list
-- Tweaked max damage defaults list
-- Extended potion duration now has an allow / deny list
-    - Default is a deny list of: poison, turtle_master, regeneration, strength, weakness
+- Gold Tools can now mine at iron level. (This is controlled by the `#vanillium:incorrect_for_gold_tool` tag)
+- Fixed a bug with stackable fuels with remainders deleting remainders in furnaces
