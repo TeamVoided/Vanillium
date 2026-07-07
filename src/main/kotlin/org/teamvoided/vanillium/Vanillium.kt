@@ -2,6 +2,7 @@ package org.teamvoided.vanillium
 
 import me.fzzyhmstrs.fzzy_config.api.ConfigApi
 import net.minecraft.resources.Identifier
+import net.minecraft.world.item.Item
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.teamvoided.vanillium.config.VanilliumCfg

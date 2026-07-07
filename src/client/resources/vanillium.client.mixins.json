@@ -4,7 +4,11 @@
   "package": "org.teamvoided.vanillium.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "LocalPlayerMixin"
+    "LocalPlayerMixin",
+    "api.CreativeModeInventoryScreenMixin",
+    "api.ScreenMixin",
+    "api.TooltipContextImplMixin",
+    "api.TooltipContextMixin"
   ],
   "injectors": {
     "defaultRequire": 1

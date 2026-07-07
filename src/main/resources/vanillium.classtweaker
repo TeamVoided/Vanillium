@@ -1,0 +1,2 @@
+classTweaker v1 named
+inject-interface net/minecraft/world/item/Item$TooltipContext org/teamvoided/vanillium/client/item/ExtendedTooltipContext
