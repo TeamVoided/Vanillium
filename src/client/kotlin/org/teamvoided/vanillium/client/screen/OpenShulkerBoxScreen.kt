@@ -12,21 +12,24 @@ import org.teamvoided.vanillium.Vanillium.mc
 
 
 @Environment(EnvType.CLIENT)
-class OpenShulkerBoxScreen<T : AbstractContainerMenu>(menu: T, inventory: Inventory, component: Component) :
+class OpenShulkerBoxScreen<T : AbstractContainerMenu>(menu: T,val inventory: Inventory, component: Component) :
     AbstractContainerScreen<T>(menu, inventory, component) {
 
     override fun render(guiGraphics: GuiGraphics, i: Int, j: Int, f: Float) {
         super.render(guiGraphics, i, j, f)
-        this.renderTooltip(guiGraphics, i, j)
+        renderTooltip(guiGraphics, i, j)
     }
 
     override fun renderBg(guiGraphics: GuiGraphics, f: Float, i: Int, j: Int) {
-        val k = (this.width - this.imageWidth) / 2
-        val l = (this.height - this.imageHeight) / 2
+        val x = (width - imageWidth) / 2
+        val y = (height - imageHeight) / 2
         guiGraphics.blit(
-            RenderPipelines.GUI_TEXTURED, CONTAINER_TEXTURE,
-            k, l, 0.0f, 0.0f, this.imageWidth, this.imageHeight, 256, 256
+            RenderPipelines.GUI_TEXTURED, CONTAINER_TEXTURE, x, y, 0.0f, 0.0f, imageWidth, imageHeight, 256, 256
         )
+    }
+
+    override fun containerTick() {
+       menu.stillValid(inventory.player)
     }
 
     companion object {

@@ -5,8 +5,10 @@ import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundEvents.SHULKER_BOX_OPEN
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.SlotAccess
+import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ClickAction
+import net.minecraft.world.inventory.PlayerEnderChestContainer
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemStack
@@ -17,9 +19,7 @@ import org.teamvoided.vanillium.Vanillium.config
 import org.teamvoided.vanillium.util.openShulker
 import kotlin.math.min
 
-fun playInsertSound(entity: Entity) =
-    entity.playSound(SHULKER_BOX_OPEN, 0.4f, 0.9f + entity.level().getRandom().nextFloat() * 0.4f)
-
+fun Entity.playInsertSound() = playSound(SHULKER_BOX_OPEN, 0.4f, 0.9f + level().getRandom().nextFloat() * 0.4f)
 
 fun itemOnShulker(
     stack: ItemStack, otherStack: ItemStack, thisSlot: Slot,
@@ -35,12 +35,23 @@ fun itemOnShulker(
 
     val contentsData = stack.get(CONTAINER) ?: return null
 
-    if (inputStack.isEmpty && config.canOpenSkulkersInInventor) {
+    val slotIdx = when (thisSlot.container) {
+        is Inventory -> thisSlot.containerSlot
+        is PlayerEnderChestContainer -> -1
+        else -> null
+    }
+    if (inputStack.isEmpty && config.canOpenSkulkersInInventor && slotIdx != null) {
+
         if (player is ServerPlayer) {
             player.closeContainer()
-            player.openShulker(stack, thisSlot.containerSlot)
+            println(thisSlot.asString())
+            player.openShulker(stack, slotIdx)
         }
-        playInsertSound(player)
+        else {
+            player.closeContainer()
+            println("GaaaA!")
+        }
+        player.playInsertSound()
         return true
     }
     if (!config.shulkerInventoryInsert) return null
@@ -50,10 +61,14 @@ fun itemOnShulker(
     val inventory = tryToAdd(originInventory.toMutableList(), access, player)
     if (inventory != originInventory) {
         stack.set(CONTAINER, ItemContainerContents.fromItems(inventory))
-        playInsertSound(player)
+        player.playInsertSound()
         return true
     }
     return false
+}
+
+fun Slot.asString(): String {
+    return "${javaClass.simpleName}(${containerSlot}, ${container}, ${index})"
 }
 
 fun tryToAdd(inventory: MutableList<ItemStack>, access: SlotAccess, player: Player): MutableList<ItemStack> {
@@ -99,7 +114,7 @@ fun shulkerOnItem(stack: ItemStack, otherSlot: Slot, clickAction: ClickAction, p
     val inventory = tryToAdd(originInventory.toMutableList(), otherSlot, player)
     if (inventory != originInventory) {
         stack.set(CONTAINER, ItemContainerContents.fromItems(inventory))
-        playInsertSound(player)
+        player.playInsertSound()
         return true
     }
     return false

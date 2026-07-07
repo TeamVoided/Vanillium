@@ -2,6 +2,7 @@ package org.teamvoided.vanillium.inventory
 
 import net.minecraft.core.component.DataComponents.CONTAINER
 import net.minecraft.world.SimpleContainer
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.component.ItemContainerContents
 
@@ -20,4 +21,7 @@ class SimpleStackBasedContainer(val stack: ItemStack, size: Int) : SimpleContain
         super.setChanged()
         stack.set(CONTAINER, ItemContainerContents.fromItems(items))
     }
+
+    override fun stillValid(player: Player): Boolean = !stack.isEmpty
+
 }

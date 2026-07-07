@@ -253,14 +253,15 @@ class VanilliumCfg : Config(id(MODID)) {
             Potions.LONG_WEAKNESS.value(),
         )
 
+    var shulkerTweaks = ConfigGroup("shulker_tweaks", true)
+    var shulkerInventoryInsert = false
+    @ConfigGroup.Pop
+    var canOpenSkulkersWhenInHand = false
     // endregion
 
     // region Experimental
     var experimental = ConfigGroup("experimental", true)
-    var shulkerInventoryInsert = false
-    var canOpenSkulkersInInventor = false
-
     @ConfigGroup.Pop
-    var canOpenSkulkersWhenInHand = false
+    var canOpenSkulkersInInventor = false
     // endregion
 }

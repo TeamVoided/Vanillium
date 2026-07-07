@@ -53,7 +53,7 @@ object VnlEvents {
             val item = stack.item
             if (item is BlockItem && item.block is ShulkerBoxBlock) {
                 if (player is ServerPlayer) player.openShulker(stack, player.inventory.selectedSlot)
-                playInsertSound(player)
+                player.playInsertSound()
                 return InteractionResult.SUCCESS
             }
         }

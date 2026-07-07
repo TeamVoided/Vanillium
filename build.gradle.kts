@@ -34,7 +34,7 @@ modSettings {
     entrypoint("client", "org.teamvoided.vanillium.client.VanilliumClient::init")
     entrypoint("fabric-datagen", "org.teamvoided.vanillium.data.gen.VanilliumData")
 
-//    mixinFile("${modId()}.client.mixins.json")
+    mixinFile("${modId()}.client.mixins.json")
     mixinFile("${modId()}.mixins.json")
     dependency("fzzy_config", "*")
 }
@@ -107,6 +107,7 @@ tasks {
         toolchain.languageVersion.set(JavaLanguageVersion.of(JavaVersion.toVersion(targetJavaVersion).toString()))
         withSourcesJar()
     }
+
 //    jar {
 //        val valTaskNames = gradle.startParameter.taskNames
 //        if (!valTaskNames.contains("runDataGen")) {
@@ -115,6 +116,7 @@ tasks {
 //            println("Running datagen for task ${valTaskNames.joinToString(" ")}")
 //        }
 //    }
+
 }
 
 publishScript {
