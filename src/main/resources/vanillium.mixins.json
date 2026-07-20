@@ -10,7 +10,8 @@
     "ToolMaterialMixin",
     "accessors.MobEffectInstanceAccessor",
     "furnacefix.AbstractFurnaceBlockEntityMixin",
-    "furnacefix.FurnaceFuelSlotMixin"
+    "furnacefix.FurnaceFuelSlotMixin",
+    "stackbles.SolidBucketItemMixin"
   ],
   "injectors": {
     "defaultRequire": 1
