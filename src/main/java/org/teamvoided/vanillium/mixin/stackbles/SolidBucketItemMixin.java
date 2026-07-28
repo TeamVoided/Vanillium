@@ -14,11 +14,10 @@ import org.spongepowered.asm.mixin.injection.At;
 public class SolidBucketItemMixin {
 
     @WrapOperation(method = "useOn", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;setItemInHand(Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/item/ItemStack;)V"))
-    void fixItemDeletion(Player player, InteractionHand hand, ItemStack itemStack, Operation<Void> original, UseOnContext ctx) {
-        var stack = ctx.getItemInHand();
-        if (itemStack != null && !itemStack.isEmpty()) {
-            if (!player.getInventory().add(itemStack)) {
-                player.drop(itemStack, false);
+    void fixItemDeletion(Player player, InteractionHand hand, ItemStack stack, Operation<Void> original, UseOnContext ctx) {
+        if (stack != null && !stack.isEmpty()) {
+            if (!player.getInventory().add(stack)) {
+                player.drop(stack, false);
             }
         }
     }
