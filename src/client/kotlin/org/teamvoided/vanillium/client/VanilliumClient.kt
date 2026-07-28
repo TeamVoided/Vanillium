@@ -5,7 +5,6 @@ import me.fzzyhmstrs.fzzy_config.api.RegisterType
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.MenuScreens
-import net.minecraft.client.gui.screens.inventory.AbstractFurnaceScreen
 import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.Component.translatable
@@ -15,7 +14,6 @@ import net.minecraft.world.item.ItemStack
 import org.teamvoided.vanillium.Vanillium.id
 import org.teamvoided.vanillium.Vanillium.mc
 import org.teamvoided.vanillium.client.config.FuelDisplayType
-import org.teamvoided.vanillium.client.config.TooltipRenderType
 import org.teamvoided.vanillium.client.config.VanilliumClientCfg
 import org.teamvoided.vanillium.client.init.VnlClientNet
 import org.teamvoided.vanillium.client.screen.OpenShulkerBoxScreen
@@ -42,14 +40,9 @@ object VanilliumClient {
     fun appendFuelValues(
         level: ClientLevel?, stack: ItemStack, ctx: Item.TooltipContext, tooltips: MutableList<Component>,
     ) {
-        when (clientConfig.fuelTooltip.whenToRenderTooltip) {
-            TooltipRenderType.TAG_OR_CLASS_CHECK -> if (ctx.vanillium_currentScreen() !is AbstractFurnaceScreen<*>) return
-            TooltipRenderType.TAG -> if (ctx.vanillium_currentScreen() !is AbstractFurnaceScreen<*>) return
-            TooltipRenderType.CLASS_CHECK -> if (ctx.vanillium_currentScreen() !is AbstractFurnaceScreen<*>) return
-            TooltipRenderType.ALWAYS -> Unit
-            TooltipRenderType.NEVER -> return;
+        if (!clientConfig.fuelTooltip.whereToRenderTooltip.shouldRender(ctx.vanillium_currentScreen()) ){
+            return
         }
-
 
         val fuelValues = level?.fuelValues()?.burnDuration(stack)
 

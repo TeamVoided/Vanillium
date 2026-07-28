@@ -1,9 +1,17 @@
 package org.teamvoided.vanillium.client.config
 
+import net.minecraft.client.gui.screens.Screen
+import net.minecraft.client.gui.screens.inventory.AbstractFurnaceScreen
+
 enum class TooltipRenderType {
-    TAG_OR_CLASS_CHECK,
-    TAG,
-    CLASS_CHECK,
-    ALWAYS,
-    NEVER;
+    IN_FURNACE_SCREENS, ALWAYS, NEVER;
+
+    fun shouldRender(screen: Screen?): Boolean {
+        return when (this) {
+            IN_FURNACE_SCREENS -> screen is AbstractFurnaceScreen<*>
+            ALWAYS -> true
+            NEVER -> false
+        }
+    }
+
 }
