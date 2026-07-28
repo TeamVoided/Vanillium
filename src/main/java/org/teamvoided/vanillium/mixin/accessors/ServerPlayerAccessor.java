@@ -1,4 +1,4 @@
-package org.teamvoided.vanillium.mixin;
+package org.teamvoided.vanillium.mixin.accessors;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.inventory.AbstractContainerMenu;

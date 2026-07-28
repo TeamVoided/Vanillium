@@ -6,7 +6,7 @@
   "mixins": [
     "ItemStackMixin",
     "PotionMixin",
-    "ServerPlayerAccessor",
+    "accessors.ServerPlayerAccessor",
     "ToolMaterialMixin",
     "accessors.MobEffectInstanceAccessor",
     "stackbles.furnacefix.AbstractFurnaceBlockEntityMixin",

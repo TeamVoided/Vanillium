@@ -48,7 +48,7 @@ fun itemOnShulker(
             player.openShulker(stack, slotIdx)
         }
         else {
-            player.closeContainer()
+//            player.closeContainer()
             println("GaaaA!")
         }
         player.playInsertSound()
