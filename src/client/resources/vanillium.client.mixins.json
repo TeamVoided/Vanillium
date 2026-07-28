@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_21",
   "client": [
     "LocalPlayerMixin",
+    "PotionContentsMixin",
     "api.CreativeModeInventoryScreenMixin",
     "api.ScreenMixin",
     "api.TooltipContextImplMixin",
