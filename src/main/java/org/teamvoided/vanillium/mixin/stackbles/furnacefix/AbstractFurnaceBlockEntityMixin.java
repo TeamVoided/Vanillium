@@ -1,4 +1,4 @@
-package org.teamvoided.vanillium.mixin.furnacefix;
+package org.teamvoided.vanillium.mixin.stackbles.furnacefix;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.core.BlockPos;

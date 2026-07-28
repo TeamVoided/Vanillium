@@ -9,8 +9,8 @@
     "ServerPlayerAccessor",
     "ToolMaterialMixin",
     "accessors.MobEffectInstanceAccessor",
-    "furnacefix.AbstractFurnaceBlockEntityMixin",
-    "furnacefix.FurnaceFuelSlotMixin",
+    "stackbles.furnacefix.AbstractFurnaceBlockEntityMixin",
+    "stackbles.furnacefix.FurnaceFuelSlotMixin",
     "stackbles.SolidBucketItemMixin"
   ],
   "injectors": {
