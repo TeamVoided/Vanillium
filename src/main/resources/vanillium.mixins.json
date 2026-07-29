@@ -4,14 +4,16 @@
   "package": "org.teamvoided.vanillium.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "accessors.AbstractContainerMenuAccessor",
     "ItemStackMixin",
     "PotionMixin",
-    "accessors.ServerPlayerAccessor",
+    "ServerGamePacketListenerImplMixin",
     "ToolMaterialMixin",
     "accessors.MobEffectInstanceAccessor",
+    "accessors.ServerPlayerAccessor",
+    "stackbles.SolidBucketItemMixin",
     "stackbles.furnacefix.AbstractFurnaceBlockEntityMixin",
-    "stackbles.furnacefix.FurnaceFuelSlotMixin",
-    "stackbles.SolidBucketItemMixin"
+    "stackbles.furnacefix.FurnaceFuelSlotMixin"
   ],
   "injectors": {
     "defaultRequire": 1

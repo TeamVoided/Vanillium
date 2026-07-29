@@ -41,15 +41,8 @@ fun itemOnShulker(
         else -> null
     }
     if (inputStack.isEmpty && config.canOpenSkulkersInInventor && slotIdx != null) {
-
         if (player is ServerPlayer) {
-            player.closeContainer()
-            println(thisSlot.asString())
             player.openShulker(stack, slotIdx)
-        }
-        else {
-//            player.closeContainer()
-            println("GaaaA!")
         }
         player.playInsertSound()
         return true
@@ -58,7 +51,7 @@ fun itemOnShulker(
     if (!inputStack.item.canFitInsideContainerItems()) return null
 
     val originInventory = contentsData.stream().toList()
-    val inventory = tryToAdd(originInventory.toMutableList(), access, player)
+    val inventory = tryToAdd(originInventory.toMutableList(), access)
     if (inventory != originInventory) {
         stack.set(CONTAINER, ItemContainerContents.fromItems(inventory))
         player.playInsertSound()
@@ -67,11 +60,7 @@ fun itemOnShulker(
     return false
 }
 
-fun Slot.asString(): String {
-    return "${javaClass.simpleName}(${containerSlot}, ${container}, ${index})"
-}
-
-fun tryToAdd(inventory: MutableList<ItemStack>, access: SlotAccess, player: Player): MutableList<ItemStack> {
+fun tryToAdd(inventory: MutableList<ItemStack>, access: SlotAccess): MutableList<ItemStack> {
     for (idx in 0 until CONTAINER_SIZE) {
         val slotItem = access.get()
         if (slotItem.isEmpty) break
@@ -120,11 +109,7 @@ fun shulkerOnItem(stack: ItemStack, otherSlot: Slot, clickAction: ClickAction, p
     return false
 }
 
-fun tryToAdd(
-    inventory: MutableList<ItemStack>,
-    otherSlot: Slot,
-    player: Player,
-): MutableList<ItemStack> {
+fun tryToAdd(inventory: MutableList<ItemStack>, otherSlot: Slot, player: Player): MutableList<ItemStack> {
     for (idx in 0 until CONTAINER_SIZE) {
         val slotItem = otherSlot.item
         if (slotItem.isEmpty) break

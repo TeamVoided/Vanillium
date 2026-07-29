@@ -1,5 +1,6 @@
 package org.teamvoided.vanillium.inventory
 
+import net.minecraft.resources.Identifier
 import net.minecraft.world.Container
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.Slot
@@ -7,7 +8,8 @@ import net.minecraft.world.item.ItemStack
 import java.util.*
 
 
-class NonInteractiveSlot(container: Container, slot: Int, x: Int, y: Int) : Slot(container, slot, x, y) {
+class NonInteractiveSlot(container: Container, slot: Int, x: Int, y: Int) : Slot(container, slot, x, y),
+    CustomSlotBackground {
     override fun mayPickup(player: Player): Boolean = false
     override fun tryRemove(i: Int, j: Int, player: Player): Optional<ItemStack> = Optional.empty<ItemStack>()
     override fun safeTake(i: Int, j: Int, player: Player): ItemStack = ItemStack.EMPTY
@@ -23,4 +25,7 @@ class NonInteractiveSlot(container: Container, slot: Int, x: Int, y: Int) : Slot
 
     override fun onTake(player: Player, itemStack: ItemStack) {
     }
+
+    override fun getBackground(): Identifier = CustomSlotBackground.EMPTY_SLOT
+
 }

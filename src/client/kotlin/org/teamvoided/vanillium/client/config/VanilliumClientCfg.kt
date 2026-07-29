@@ -12,9 +12,11 @@ class VanilliumClientCfg : Config(id("${MODID}_client")) {
 
     class FuelTooltipSection : ConfigSection() {
 
-        var whereToRenderTooltip = TooltipRenderType.IN_FURNACE_SCREENS
+        var whereToRenderTooltip = TooltipRenderType.IN_FURNACE_MENU_TAG_OR_SCREEN
 
         var displayType = FuelDisplayType.ITEMS
+
+        var countTimeForWholeStack = true
 
     }
 

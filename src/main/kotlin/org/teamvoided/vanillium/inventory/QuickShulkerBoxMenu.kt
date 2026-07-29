@@ -1,3 +1,4 @@
+
 package org.teamvoided.vanillium.inventory
 
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory
@@ -25,8 +26,6 @@ class QuickShulkerBoxMenu(i: Int, inventory: Inventory, var container: Container
         checkContainerSize(container, CONTAINER_SIZE)
         container = container
         container.startOpen(inventory.player)
-        val j = 3
-        val k = 9
 
         // Shulker
         for (l in 0..2) {
@@ -41,8 +40,6 @@ class QuickShulkerBoxMenu(i: Int, inventory: Inventory, var container: Container
                 slot(inventory, m + l * 9 + 9, 8 + m * 18, 84 + l * 18)
             }
         }
-
-
         // Hotbar
         for (slotId in 0..8) {
             slot(inventory, slotId, 8 + slotId * 18, 142)
@@ -56,6 +53,7 @@ class QuickShulkerBoxMenu(i: Int, inventory: Inventory, var container: Container
 
     override fun stillValid(player: Player): Boolean = container.stillValid(player)
 
+    @Suppress("RedundantNullableReturnType")
     override fun quickMoveStack(player: Player, i: Int): ItemStack {
         var itemStack = ItemStack.EMPTY
         val slot: Slot? = slots[i]

@@ -52,7 +52,9 @@ object VnlEvents {
             val stack = player.getItemInHand(hand)
             val item = stack.item
             if (item is BlockItem && item.block is ShulkerBoxBlock) {
-                if (player is ServerPlayer) player.openShulker(stack, player.inventory.selectedSlot)
+                if (player is ServerPlayer) {
+                    player.openShulker(stack, player.inventory.selectedSlot)
+                }
                 player.playInsertSound()
                 return InteractionResult.SUCCESS
             }

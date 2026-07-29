@@ -40,7 +40,7 @@ object VanilliumClient {
     fun appendFuelValues(
         level: ClientLevel?, stack: ItemStack, ctx: Item.TooltipContext, tooltips: MutableList<Component>,
     ) {
-        if (!clientConfig.fuelTooltip.whereToRenderTooltip.shouldRender(ctx.vanillium_currentScreen()) ){
+        if (!clientConfig.fuelTooltip.whereToRenderTooltip.shouldRender(ctx.vanillium_currentScreen())) {
             return
         }
 
@@ -49,9 +49,16 @@ object VanilliumClient {
         if (fuelValues != null && fuelValues > 0) {
             tooltips.add(
                 Component.`object`(AtlasSprite(mc("gui"), id("container/burning_amount")))
-                    .append(translatable(getFuelText(fuelValues)).withColor(0xf7830b))
+                    .append(translatable(getFuelText(getMultipliedValue(fuelValues, stack))).withColor(0xf7830b))
             )
         }
+    }
+
+    fun getMultipliedValue(fuelValues: Int, stack: ItemStack): Int {
+        return if (clientConfig.fuelTooltip.countTimeForWholeStack)
+            fuelValues * stack.count
+        else
+            fuelValues
     }
 
     fun getFuelText(fuelValues: Int): String {
