@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public class ScreenMixin {
     @ModifyExpressionValue(method = "getTooltipFromItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/Item$TooltipContext;of(Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/item/Item$TooltipContext;"))
    private static Item.TooltipContext addExtraContext(Item.TooltipContext original) {
-        original.vanillium_setScreen(Minecraft.getInstance().screen);
+        original.vnl_setScreen(Minecraft.getInstance().screen);
         return original;
     }
 }

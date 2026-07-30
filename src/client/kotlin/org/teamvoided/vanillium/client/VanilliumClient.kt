@@ -3,14 +3,20 @@ package org.teamvoided.vanillium.client
 import me.fzzyhmstrs.fzzy_config.api.ConfigApi
 import me.fzzyhmstrs.fzzy_config.api.RegisterType
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback
+import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.MenuScreens
 import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.Component.literal
 import net.minecraft.network.chat.Component.translatable
 import net.minecraft.network.chat.contents.objects.AtlasSprite
+import net.minecraft.util.ARGB
+import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.material.MapColor
 import org.teamvoided.vanillium.Vanillium.id
 import org.teamvoided.vanillium.Vanillium.mc
 import org.teamvoided.vanillium.client.config.FuelDisplayType
@@ -20,7 +26,6 @@ import org.teamvoided.vanillium.client.screen.OpenShulkerBoxScreen
 import org.teamvoided.vanillium.init.VnlMenus
 import java.text.DecimalFormat
 
-@Suppress("unused")
 object VanilliumClient {
 
     val CLEAN_DECIMAL = DecimalFormat("#.##")
@@ -34,13 +39,41 @@ object VanilliumClient {
         ItemTooltipCallback.EVENT.register { stack, ctx, flags, tooltips ->
             val level = Minecraft.getInstance().level
             appendFuelValues(level, stack, ctx, tooltips)
+            appendMapColors(stack, ctx, tooltips)
+        }
+    }
+
+    fun appendMapColors(stack: ItemStack, ctx: Item.TooltipContext, tooltips: MutableList<Component>) {
+        if (!clientConfig.mapColorTooltips.shouldRender(ctx.vnl_currentScreen())) {
+            return
+        }
+        val blockItem = stack.item as? BlockItem ?: return
+        val block = blockItem.block
+
+        if (block != Blocks.AIR) {
+            val mapColor = block.defaultMapColor()
+
+            val colorText = if (mapColor == MapColor.NONE)
+                translatable("None").withStyle(ChatFormatting.DARK_GRAY)
+            else {
+                val color = ARGB.opaque(mapColor.col)
+                val srgb = ARGB.vector3fFromRGB24(color)
+                val gray = 1 - ((srgb.x + srgb.y + srgb.z) / 3)
+                literal("\u2588").withStyle {
+                    it
+                        .withColor(color)
+                        .withShadowColor(ARGB.colorFromFloat(1f, gray, gray, gray))
+                }
+            }
+
+            tooltips.add(translatable("Map color: %s", colorText).withStyle(ChatFormatting.GRAY))
         }
     }
 
     fun appendFuelValues(
         level: ClientLevel?, stack: ItemStack, ctx: Item.TooltipContext, tooltips: MutableList<Component>,
     ) {
-        if (!clientConfig.fuelTooltip.whereToRenderTooltip.shouldRender(ctx.vanillium_currentScreen())) {
+        if (!clientConfig.fuelTooltip.shouldRender(ctx.vnl_currentScreen())) {
             return
         }
 

@@ -17,7 +17,7 @@ public class CreativeModeInventoryScreenMixin extends Screen {
 
     @ModifyExpressionValue(method = "getTooltipFromContainerItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/Item$TooltipContext;of(Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/item/Item$TooltipContext;"))
     Item.TooltipContext addExtraContext(Item.TooltipContext original){
-        original.vanillium_setScreen(this);
+        original.vnl_setScreen(this);
         return original;
     }
 }

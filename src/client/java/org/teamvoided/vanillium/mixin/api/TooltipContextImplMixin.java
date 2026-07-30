@@ -17,12 +17,12 @@ public abstract class TooltipContextImplMixin implements ExtendedTooltipContext 
     private @Nullable Screen vanillium$currentScreen = null;
 
     @Override
-    public @Nullable Screen vanillium_currentScreen() {
+    public @Nullable Screen vnl_currentScreen() {
         return vanillium$currentScreen;
     }
 
     @Override
-    public void vanillium_setScreen(@Nullable Screen screen) {
+    public void vnl_setScreen(@Nullable Screen screen) {
         vanillium$currentScreen = screen;
     }
 }

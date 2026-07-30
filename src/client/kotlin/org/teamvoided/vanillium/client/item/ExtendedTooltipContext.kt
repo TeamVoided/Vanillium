@@ -5,8 +5,8 @@ import org.jetbrains.annotations.ApiStatus
 
 @Suppress("FunctionName")
 interface ExtendedTooltipContext {
-    fun vanillium_currentScreen(): Screen?
+    fun vnl_currentScreen(): Screen?
 
     @ApiStatus.Internal
-    fun vanillium_setScreen(screen: Screen?)
+    fun vnl_setScreen(screen: Screen?)
 }

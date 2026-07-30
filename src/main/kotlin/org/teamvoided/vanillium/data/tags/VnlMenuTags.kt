@@ -8,8 +8,8 @@ object VnlMenuTags {
 
     @JvmField
     val FORCE_SYNC_AFTER_CLOSE = create("force_sync_after_close")
-    @JvmField
     val IS_FURNACE = create("is_furnace")
+    val IS_CARTOGRAPHY_TABLE = create("is_cartography_table")
 
     fun create(id: String) = Registries.MENU.tag(id(id))
 

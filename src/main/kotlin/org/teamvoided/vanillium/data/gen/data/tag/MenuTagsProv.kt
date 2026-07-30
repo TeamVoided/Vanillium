@@ -15,13 +15,16 @@ class MenuTagsProv(o: FabricDataOutput, p: CompletableFuture<HolderLookup.Provid
         o, Registries.MENU, p, { BuiltInRegistries.MENU.getResourceKey(it).get() }) {
 
     override fun addTags(wrapperLookup: HolderLookup.Provider) {
-        valueLookupBuilder(VnlMenuTags.FORCE_SYNC_AFTER_CLOSE).add(VnlMenus.QUICK_SHULKER)
+        valueLookupBuilder(VnlMenuTags.FORCE_SYNC_AFTER_CLOSE)
+            .add(VnlMenus.QUICK_SHULKER)
         valueLookupBuilder(VnlMenuTags.IS_FURNACE)
             .add(
                 MenuType.FURNACE,
                 MenuType.BLAST_FURNACE,
                 MenuType.SMOKER,
             )
+        valueLookupBuilder(VnlMenuTags.IS_CARTOGRAPHY_TABLE)
+            .add(MenuType.CARTOGRAPHY_TABLE)
     }
 
 }
