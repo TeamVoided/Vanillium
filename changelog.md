@@ -1,2 +1,8 @@
-- Gold Tools can now mine at iron level. (This is controlled by the `#vanillium:incorrect_for_gold_tool` tag)
-- Fixed a bug with stackable fuels with remainders deleting remainders in furnaces
+- Shulker Tweaks:
+  - All tweaks are no longer experimental.
+  - QuickShulkerBoxMenu now has a custom slot texture for shulker slot.
+- Tooltip changes:
+  - (New) Fuel Tooltip, by default only shown in the furnace screens.
+  - (New) Map Color Tooltip, by default only shown in the cartography table. 
+  - PotionContents Tooltip now shows icon of MobEffect before effect text.
+- Fixed a bug with stackable SolidBucketItem's (powder_snow_bucket) deleting the whole stack if placed.
