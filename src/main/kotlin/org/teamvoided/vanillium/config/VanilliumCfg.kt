@@ -255,9 +255,9 @@ class VanilliumCfg : Config(id(MODID)) {
 
     var shulkerTweaks = ConfigGroup("shulker_tweaks", true)
     var shulkerInventoryInsert = true
-    @ConfigGroup.Pop
     var canOpenSkulkersWhenInHand = true
-    var canOpenSkulkersInInventor = true
+    @ConfigGroup.Pop
+    var canOpenSkulkersInInventory = true
     // endregion
 
     // region Experimental

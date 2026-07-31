@@ -47,7 +47,7 @@ object VanilliumClient {
     }
 
     fun appendMapColors(stack: ItemStack, ctx: Item.TooltipContext, tooltips: MutableList<Component>) {
-        if (!clientConfig.mapColorTooltips.shouldRender(ctx.vnl_currentScreen())) {
+        if (!clientConfig.mapColorTooltips.shouldRender(ctx.getCurrentScreen())) {
             return
         }
         val blockItem = stack.item as? BlockItem ?: return
@@ -76,7 +76,7 @@ object VanilliumClient {
     fun appendFuelValues(
         level: ClientLevel?, stack: ItemStack, ctx: Item.TooltipContext, tooltips: MutableList<Component>,
     ) {
-        if (!clientConfig.fuelTooltip.shouldRender(ctx.vnl_currentScreen())) {
+        if (!clientConfig.fuelTooltip.shouldRender(ctx.getCurrentScreen())) {
             return
         }
 

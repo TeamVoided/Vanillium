@@ -40,7 +40,7 @@ fun itemOnShulker(
         is PlayerEnderChestContainer -> -1
         else -> null
     }
-    if (inputStack.isEmpty && config.canOpenSkulkersInInventor && slotIdx != null) {
+    if (inputStack.isEmpty && config.canOpenSkulkersInInventory && slotIdx != null) {
         if (player is ServerPlayer) {
             player.openShulker(stack, slotIdx)
         }
