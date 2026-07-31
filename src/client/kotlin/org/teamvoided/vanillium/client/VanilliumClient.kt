@@ -32,6 +32,9 @@ object VanilliumClient {
 
     val clientConfig = ConfigApi.registerAndLoadConfig(::VanilliumClientCfg, RegisterType.CLIENT)
 
+    @JvmField
+    val GUI_ATLAS = mc("gui")
+
     fun init() {
         MenuScreens.register(VnlMenus.QUICK_SHULKER, ::OpenShulkerBoxScreen)
         VnlClientNet.init()
@@ -81,7 +84,7 @@ object VanilliumClient {
 
         if (fuelValues != null && fuelValues > 0) {
             tooltips.add(
-                Component.`object`(AtlasSprite(mc("gui"), id("container/burning_amount")))
+                Component.`object`(AtlasSprite(GUI_ATLAS, id("container/burning_amount")))
                     .append(translatable(getFuelText(getMultipliedValue(fuelValues, stack))).withColor(0xf7830b))
             )
         }

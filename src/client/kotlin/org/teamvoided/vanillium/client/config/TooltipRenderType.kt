@@ -4,7 +4,7 @@ import net.minecraft.client.gui.screens.Screen
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
 import net.minecraft.tags.TagKey
 import net.minecraft.world.inventory.MenuType
-import org.teamvoided.vanillium.util.getTypeHolder
+import org.teamvoided.voidlib.util.getTypeHolder
 
 enum class TooltipRenderType {
     IN_MENU_TAG_OR_SCREEN,

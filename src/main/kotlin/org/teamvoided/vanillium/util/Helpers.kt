@@ -5,13 +5,10 @@ package org.teamvoided.vanillium.util
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.core.Holder
 import net.minecraft.core.Registry
-import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.tags.TagKey
-import net.minecraft.world.inventory.AbstractContainerMenu
-import net.minecraft.world.inventory.MenuType
 import net.minecraft.world.item.ItemStack
 import org.teamvoided.vanillium.Vanillium.MODID
 import org.teamvoided.vanillium.inventory.QuickShulkerBoxMenu.Companion.shulkerMenuProvider
@@ -40,16 +37,4 @@ fun <T : Any, R : Registry<T>> ResourceKey<R>.key(id: Identifier): ResourceKey<T
 
 fun ServerPlayer.openShulker(stack: ItemStack, lockedSlot: Int) {
     openMenu(shulkerMenuProvider(stack, lockedSlot))
-}
-
-fun getType(containerMenu: AbstractContainerMenu): MenuType<*>? {
-    try {
-        return containerMenu.type
-    } catch (ignored: Exception) {
-    }
-    return null
-}
-
-fun getTypeHolder(containerMenu: AbstractContainerMenu): Holder<MenuType<*>>? {
-    return getType(containerMenu)?.let(BuiltInRegistries.MENU::wrapAsHolder)
 }

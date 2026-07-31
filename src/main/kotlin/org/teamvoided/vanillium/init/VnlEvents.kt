@@ -2,6 +2,7 @@ package org.teamvoided.vanillium.init
 
 import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents
+import net.fabricmc.fabric.api.util.TriState
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.component.DataComponents.CHARGED_PROJECTILES
 import net.minecraft.core.component.DataComponents.MAX_STACK_SIZE
@@ -19,12 +20,12 @@ import net.minecraft.world.item.ThrowablePotionItem
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.ShulkerBoxBlock
 import org.teamvoided.vanillium.Vanillium.config
-import org.teamvoided.vanillium.events.InventoryItemEvents
-import org.teamvoided.vanillium.events.PostUseItemEvents
 import org.teamvoided.vanillium.inventory.itemOnShulker
 import org.teamvoided.vanillium.inventory.playInsertSound
 import org.teamvoided.vanillium.inventory.shulkerOnItem
 import org.teamvoided.vanillium.util.openShulker
+import org.teamvoided.voidlib.api.events.InventoryItemEvents
+import org.teamvoided.voidlib.api.events.PostUseItemEvents
 
 object VnlEvents {
     fun init() {
@@ -63,22 +64,21 @@ object VnlEvents {
         return InteractionResult.PASS
     }
 
-    fun onClickedOnOther(stack: ItemStack, otherSlot: Slot, clickAction: ClickAction, player: Player): Boolean? {
+    fun onClickedOnOther(self: ItemStack, slot: Slot, clickAction: ClickAction, player: Player): TriState {
         if (config.shulkerInventoryInsert) {
-            val value = shulkerOnItem(stack, otherSlot, clickAction, player)
-            if (value != null) return value
+            val value = shulkerOnItem(self, slot, clickAction, player)
+            if (value != null) return TriState.of(value)
         }
-
-        return null
+        return TriState.DEFAULT
     }
 
     fun onClicked(
-        stack: ItemStack, otherStack: ItemStack, thisSlot: Slot,
-        clickAction: ClickAction, player: Player, cursorSlot: SlotAccess,
-    ): Boolean? {
-        val value = itemOnShulker(stack, otherStack, thisSlot, clickAction, player, cursorSlot)
-        if (value != null) return value
-        return null
+        self: ItemStack, other: ItemStack, slot: Slot,
+        clickAction: ClickAction, player: Player, carriedItem: SlotAccess,
+    ): TriState {
+        val value = itemOnShulker(self, other, slot, clickAction, player, carriedItem)
+        if (value != null) return TriState.of(value)
+        return TriState.DEFAULT
     }
 
     fun cooldownEvents() {
@@ -93,24 +93,28 @@ object VnlEvents {
                     cooldown(stack, player)
                 }
             }
+            InteractionResult.PASS
         }
         PostUseItemEvents.POST_USE_ON_BLOCK.register { result, ctx ->
             val player = ctx.player
             if (player != null && shouldCauseCooldown(player) && !result.noAction()) {
                 cooldown(ctx.itemInHand, player)
             }
+            InteractionResult.PASS
         }
 
         PostUseItemEvents.POST_USE_ON_ENTITY.register { returned, player, entity, hand ->
             if (shouldCauseCooldown(player) && !returned.noAction()) {
                 cooldown(player.getItemInHand(hand), player)
             }
+            InteractionResult.PASS
         }
 
         PostUseItemEvents.POST_FINISH_USING.register { transformedStack, stack, world, player ->
             if (player is Player && shouldCauseCooldown(player)) {
                 cooldown(stack, player)
             }
+            transformedStack
         }
 
         PostUseItemEvents.POST_RELEASE_USING.register { stack, world, player, remainingUseTicks ->

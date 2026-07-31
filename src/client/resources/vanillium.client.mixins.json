@@ -4,12 +4,7 @@
   "package": "org.teamvoided.vanillium.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "AbstractContainerScreenMixin",
-    "PotionContentsMixin",
-    "api.CreativeModeInventoryScreenMixin",
-    "api.ScreenMixin",
-    "api.TooltipContextImplMixin",
-    "api.TooltipContextMixin"
+    "PotionContentsMixin"
   ],
   "injectors": {
     "defaultRequire": 1

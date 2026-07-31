@@ -1,9 +1,10 @@
 [versions]
-kotlin = "2.1.20"
+kotlin = "2.2.20"
 fabric-loom = "1.16-SNAPSHOT"
 iridium = "3.5.0"
 # Dependencies
 fzzy-config = "0.7.6+1.21.11"
+voidlib = "0.1.1-alpha.1+1.21.11"
 # QoL
 modmenu = "17.0.0"
 #emi = "1.1.22+1.21.1"
@@ -14,6 +15,7 @@ creative-works = "0.5.1+1.21.11"
 [libraries]
 # Dependencies
 fzzy-config = { module = "me.fzzyhmstrs:fzzy_config", version.ref = "fzzy-config" }
+voidlib = { module = "org.teamvoided:voidlib", version.ref = "voidlib" }
 # QoL
 modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }
 #emi = { module = "dev.emi:emi-fabric", version.ref = "emi" }

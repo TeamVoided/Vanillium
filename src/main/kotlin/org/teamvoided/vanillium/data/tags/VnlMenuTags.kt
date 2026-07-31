@@ -6,8 +6,6 @@ import org.teamvoided.vanillium.util.tag
 
 object VnlMenuTags {
 
-    @JvmField
-    val FORCE_SYNC_AFTER_CLOSE = create("force_sync_after_close")
     val IS_FURNACE = create("is_furnace")
     val IS_CARTOGRAPHY_TABLE = create("is_cartography_table")
 

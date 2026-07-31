@@ -8,6 +8,7 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.world.inventory.MenuType
 import org.teamvoided.vanillium.data.tags.VnlMenuTags
 import org.teamvoided.vanillium.init.VnlMenus
+import org.teamvoided.voidlib.data.tags.VMenuTags
 import java.util.concurrent.CompletableFuture
 
 class MenuTagsProv(o: FabricDataOutput, p: CompletableFuture<HolderLookup.Provider>) :
@@ -15,8 +16,7 @@ class MenuTagsProv(o: FabricDataOutput, p: CompletableFuture<HolderLookup.Provid
         o, Registries.MENU, p, { BuiltInRegistries.MENU.getResourceKey(it).get() }) {
 
     override fun addTags(wrapperLookup: HolderLookup.Provider) {
-        valueLookupBuilder(VnlMenuTags.FORCE_SYNC_AFTER_CLOSE)
-            .add(VnlMenus.QUICK_SHULKER)
+        valueLookupBuilder(VMenuTags.FORCE_SYNC_AFTER_CLOSE).add(VnlMenus.QUICK_SHULKER)
         valueLookupBuilder(VnlMenuTags.IS_FURNACE)
             .add(
                 MenuType.FURNACE,

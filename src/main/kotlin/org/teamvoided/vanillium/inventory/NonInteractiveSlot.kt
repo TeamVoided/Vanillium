@@ -5,6 +5,7 @@ import net.minecraft.world.Container
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
+import org.teamvoided.voidlib.api.inventory.slot.CustomSlotBackground
 import java.util.*
 
 

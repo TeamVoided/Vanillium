@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.function.Consumer;
 
-import static org.teamvoided.vanillium.Vanillium.mc;
+import static org.teamvoided.vanillium.client.VanilliumClient.GUI_ATLAS;
 
 
 @Mixin(PotionContents.class)
@@ -28,7 +28,7 @@ public class PotionContentsMixin {
     private static <T> void addLittleCuteIcons(
             Consumer<T> instance, T text, Operation<Void> original, @Local Holder<MobEffect> holder) {
         original.call(instance,
-                Component.object(new AtlasSprite(mc("gui"), Gui.getMobEffectSprite(holder)))
+                Component.object(new AtlasSprite(GUI_ATLAS, Gui.getMobEffectSprite(holder)))
                         .append(Component.literal(" "))
                         .append((MutableComponent) text)
         );

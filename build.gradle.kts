@@ -40,10 +40,13 @@ modSettings {
     dependency("fzzy_config", "*")
 }
 
+@Suppress("AvoidDuplicateDependencies")
 dependencies {
     modImplementation(fileTree("libs"))
     // Dependencies
     modImplementation(libs.fzzy.config)
+    modImplementation(libs.voidlib)
+    include(libs.voidlib)
     // QoL
     modImplementation(libs.modmenu)
 //    modCompileOnly("${libs.emi.get()}:api")
