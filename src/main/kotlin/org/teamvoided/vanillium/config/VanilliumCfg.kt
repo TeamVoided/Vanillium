@@ -229,7 +229,7 @@ class VanilliumCfg : Config(id(MODID)) {
         fun state() = this == ALLOW_LIST
     }
 
-    @ConfigGroup.Pop
+
     @ConfigGroup.Pop
     var durationsList = ValidatedRegistryType.of(Potions.STRENGTH.value(), BuiltInRegistries.POTION)
         .toSet(
@@ -255,13 +255,13 @@ class VanilliumCfg : Config(id(MODID)) {
 
     var shulkerTweaks = ConfigGroup("shulker_tweaks", true)
     var shulkerInventoryInsert = true
-    var canOpenSkulkersWhenInHand = true
     @ConfigGroup.Pop
-    var canOpenSkulkersInInventory = true
+    var canOpenSkulkersWhenInHand = true
     // endregion
 
     // region Experimental
-//    var experimental = ConfigGroup("experimental", true)
-//    @ConfigGroup.Pop
+    var experimental = ConfigGroup("experimental", true)
+    @ConfigGroup.Pop
+    var canOpenSkulkersInInventory = false
     // endregion
 }

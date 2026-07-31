@@ -1,5 +1,5 @@
 - Shulker Tweaks:
-  - All tweaks are no longer experimental.
+  - Most tweaks are no longer experimental.
   - QuickShulkerBoxMenu now has a custom slot texture for shulker slot.
 - Tooltip changes:
   - (New) Fuel Tooltip, by default only shown in the furnace screens.
