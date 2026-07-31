@@ -10,7 +10,6 @@
     "ServerGamePacketListenerImplMixin",
     "ToolMaterialMixin",
     "accessors.MobEffectInstanceAccessor",
-    "accessors.ServerPlayerAccessor",
     "stackbles.SolidBucketItemMixin",
     "stackbles.furnacefix.AbstractFurnaceBlockEntityMixin",
     "stackbles.furnacefix.FurnaceFuelSlotMixin"
