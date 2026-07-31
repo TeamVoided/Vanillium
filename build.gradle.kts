@@ -136,12 +136,15 @@ uploadConfig {
 
     changeLog = File("./changelog.md").readText()
     // FabricApi
-    modrinthDependency("P7dR8mSH", uploadConfig.REQUIRED)
+    modrinthDependency("P7dR8mSH", REQUIRED)
 //    curseDependency("fabric-api", uploadConfig.REQUIRED)
     // Fabric Language Kotlin
-    modrinthDependency("Ha28R6CL", uploadConfig.REQUIRED)
+    modrinthDependency("Ha28R6CL", REQUIRED)
 //    curseDependency("fabric-language-kotlin", uploadConfig.REQUIRED)
     // Fzzy config
-    modrinthDependency("hYykXjDp", uploadConfig.REQUIRED)
+    modrinthDependency("hYykXjDp", REQUIRED)
 //    curseDependency("fabric-api", uploadConfig.REQUIRED)
+    // Voidlib
+    modrinthDependency("xKvmouu3", EMBEDDED)
+
 }
